@@ -1,3 +1,12 @@
+/* Google Fonts */
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+
+/* set global font to Open Sans */
+body {
+  font-family: 'Open Sans', 'sans-serif';
+  background-image: url(http://benague.ca/files/pw_pattern.png);
+}
+
 /** Styling for the username field **/
 label.item.has-error {  
   border-top: 2px solid #C91F37;
@@ -271,16 +280,6 @@ item item-text-wrap-login {
 }
 
 /* Flat Buttons */
-
-/* Google Fonts */
-@import url(http://fonts.googleapis.com/css?family=Open+Sans);
-
-/* set global font to Open Sans */
-body {
-  font-family: 'Open Sans', 'sans-serif';
-  background-image: url(http://benague.ca/files/pw_pattern.png);
-}
-
 .link:hover {
   color: #2ecc71;
   border-bottom: 2px dotted #2ecc71;
@@ -526,6 +525,7 @@ p.jobdetails-supplier-myjobs {
   margin-left:65px;
   width: 11em;
   word-wrap: break-word;
+}
 
 /* INDENTATION FOR SUPPLIER/RECEIVER IN VIEW JOBS PAGE*/
 #input2{
