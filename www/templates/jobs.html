@@ -1,0 +1,57 @@
+<ion-view view-title="Jobs">
+    <ion-nav-buttons side="secondary">
+        <button class="button button-clear button-positive" ng-click="openModal()">Edit <i class="ion-compose" style="padding-left:2px"></i></button>
+    </ion-nav-buttons>
+    <ion-content>
+        
+        <button class="button button-block ion-android-locate padding-right  btn-findlocation orange-acc" ng-click="goToMap()">
+            Find My Current Location
+        </button>
+        <ul class="list">
+            <li class="item item-text-wrap item-button-right" ng-repeat="job in jobList">
+                    <!--<div class="buttons">-->
+<!--                    <button class="button button-energized">
+                        <i class="icon ion-android-locate"></i>
+                    </button>-->
+
+                    <button class="button button-dark" ng-click="view(job)">
+                        <i class="icon ion-android-arrow-forward"></i>
+                    </button>
+      
+<!--                </div>-->
+<!--                    <h3>{{job.demand.supply.itemName}}</h3>-->
+                        <h3>Milo Tin - 500g</h3>
+                    
+<!--                    <h3>Quantity: {{job.demand.quantityDemanded}} pcs</h3>-->
+                        <h3>Quantity: 20 tins</h3>
+<!--                    <p><b>Supplier:</b> {{job.demand.supply.user.address}}</p>-->
+                    
+                    <label for="input2">
+                        <p class="jobdetails-supplier">
+                            <b>Supplier:</b>
+                            Joo Seng Road #01-130
+<!--                            {{job.demand.supply.user.address}}-->
+                        </p>
+                    </label>
+                    
+                        <label for="input2">
+                            <p class="jobdetails-receiver">
+                                <b>Receiver:</b>
+                                Smile Street 10 
+<!--                                {{job.demand.user.address}}-->
+                            </p>
+                        </label>
+             
+                   
+<!--                    <p style=" line-height:120%">S {{job.demand.supply.user.address}}</p>-->
+<!--                    <p style=" line-height:120%">To: {{job.demand.user.address}}</p>-->
+<!--                    <h3>Receiver <p>{{job.demand.user.organizationName}}</p></h3>
+                    <h3>Quantity <p>{{job.demand.quantityDemanded}}</p></h3>
+                    <h3>Expiry Date <p>{{job.expiryDate}}</p></h3>-->
+
+                <!--$scope.tableColumns = ['demand.supply.itemName', 'demand.supply.user.organizationName', 'demand.user.organizationName', 'demand.quantityDemanded', 'expiryDate'];-->
+<!--{{job.demand.supply.user.organizationName}}-->
+            </li>
+        </ul>
+    </ion-content>
+</ion-view>
