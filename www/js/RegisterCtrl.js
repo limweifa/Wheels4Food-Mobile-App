@@ -8,8 +8,11 @@ angular.module('starter.controllers')
                 'confirmPassword': '',
                 'organizationName': '',
                 'email': '',
+                'address': '',
+                'postalCode': '',
                 'pocName': '',
                 'pocNumber': '',
+                'licenseNumber': '',
                 'description': '',
                 'role': 'Volunteer'
             };
