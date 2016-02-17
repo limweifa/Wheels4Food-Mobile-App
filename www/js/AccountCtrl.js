@@ -16,7 +16,7 @@ angular.module('starter.controllers')
             });
 //            }
             $scope.logout = function () {
-                $window.localStorage.clear();
+                $localstorage.clear();
                 $ionicHistory.clearCache();
                 $ionicHistory.clearHistory();
                 $state.go('login');
