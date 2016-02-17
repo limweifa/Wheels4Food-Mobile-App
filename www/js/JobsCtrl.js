@@ -1,6 +1,7 @@
 angular.module('starter.controllers')
 
-        .controller('JobsCtrl', function ($scope, $state, $http, $filter, $localstorage, api, $ionicPopup, $ionicModal) {
+        .controller('JobsCtrl', function ($scope, $state, $stateParams, $http, $filter, $localstorage, api, $ionicPopup, $ionicModal) {
+            console.log("JobsCtrl");
             $scope.username = $localstorage.get('username');
             $scope.userID = $localstorage.get('userID');
             
@@ -180,7 +181,9 @@ angular.module('starter.controllers')
                     if (response.data.isAccepted) {
                         console.log("Job Successfully Accepted!");
                         $scope.modal.hide();
-                        $state.go('tab.myjobs');
+                        
+//                        $state.go($state.current, $stateParams, {reload: true, inherit: false});
+//                        $state.go('tab.myjobs');
 //                        $scope.modal.hide();
 //                        $scope.showAlert = function () {
 //                            var alertAcceptJobSuccessPopup = $ionicPopup.alert({

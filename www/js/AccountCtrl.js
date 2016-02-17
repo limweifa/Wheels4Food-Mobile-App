@@ -42,7 +42,7 @@ angular.module('starter.controllers')
                         }).then(function (response) {
                             if (response.data.isUpdated) {
                                 $scope.originalUser = angular.copy($scope.user);
-                                $state.go('tab.account');
+                                $scope.modal.hide();
                             } else {
                                 $scope.errorList = response.data.errorList;
 
