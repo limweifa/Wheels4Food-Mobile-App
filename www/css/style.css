@@ -69,17 +69,17 @@ label.item.valid-lr {
 }
 
 .bar.bar-stable {
-    border-color: #f6bb42;
+    border-color: #3BAFDA;
     background-image: linear-gradient(0deg, #b2b2b2, #b2b2b2 50%, transparent 50%);
     /* color: #ffffff; */
-    background-color: #f6bb42;
+    background-color: #3BAFDA;
 }
 
 .tabs-striped .tabs {
-    background-color: #f6bb42;
+    background-color: #3BAFDA;
     background-image: none;
     border: none;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid ##3BAFDA;
     padding-top: 2px;
 }
 
@@ -227,7 +227,7 @@ span.back-text {
     background-position: top;
     background-size: 100% 1px;
     background-repeat: no-repeat;
-    background-color: #f6bb42;
+    background-color: #3BAFDA;
 }
 
 /*Navigation Tab Icons*/
@@ -418,15 +418,23 @@ item item-text-wrap-login {
   background-color: #FF983C;
 }
 
-.orange-acc {
-  background-color: #e67e22;
+.blue-acc {
+  background-color: #656d78;
 /*  box-shadow: 0px 5px 0px 0px #CD6509;*/
 }
 
-.orange-acc:hover {
-  background-color: #FF983C;
+.blue-acc:hover {
+  background-color: #656d78;
 }
 
+.grey {
+  background-color: #656D78;
+/*  box-shadow: 0px 5px 0px 0px #CD6509;*/
+}
+
+.grey:hover {
+  background-color: #CCD1D9;
+}
 
 .yellow {
   background-color: #f1c40f;
@@ -541,4 +549,74 @@ p.jobdetails-supplier-myjobs {
   left: 0.5em;
   font-size: 12px;
   line-height: 26px; 
+}
+
+/* view job details page*/
+
+.reducepadding{
+    padding:5px;
+}
+
+.reducepaddingnone{
+    padding:1px;
+    min-height:0px;
+    font-size:14px;
+    border-width:0px;
+}
+
+/* view jobs page*/
+.jobs .item p {
+    color: #444;
+}
+
+.jobs .reduceinputlabel {
+    padding:0px 0px 0px 0px;
+    border-width:0px;
+    font-size:14px;
+    width:110px;  
+}
+
+.jobs .reducebuttonpadding {
+    padding-right:10px;
+    text-align:right;
+    margin-top:5px;
+}
+
+.view-job-details .item .badge {
+    right: 10px;
+}
+
+.view-job-details .item p {
+    max-width: 70%;
+}
+
+.jobs .removebottommargin {
+    margin-bottom:0px;
+}
+
+/*my jobs page*/
+.jobs .leftpadding {
+    padding-left:5px;
+}
+
+.jobs .myjobstatustitle {
+    text-align: center;
+}
+
+.myjobs .reduceinputlabel {
+    padding:0px 0px 0px 0px;
+    border-width:0px;
+    font-size:14px;
+    width:130px;  
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.myjobs .item p {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+
+/*for my jobs but my jobs page class now is currently jobs*/
+.editwidth{
+    max-width:220px;
 }

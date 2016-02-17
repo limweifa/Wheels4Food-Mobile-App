@@ -11,6 +11,15 @@ angular.module('starter.controllers')
             }).then(function (response) {
                 $scope.jobList = response.data;
             });
+            
+             $http({
+                url: api.endpoint + 'GetDemandItemListRequest',
+                method: 'GET'
+            }).then(function (response) {
+                $scope.demandItemList = response.data;
+                console.log("GetDemandItemListRequest SUCCESS");
+                console.log($scope.demandItemList);
+            });
 
             //viewing the particular job details
             $scope.view = function (job) {
@@ -23,6 +32,14 @@ angular.module('starter.controllers')
                 }).then(function (response) {
                     $scope.currentJob = response.data;
                 });
+                
+                $http({
+                    url: api.endpoint + 'GetDemandItemListByDemandIdRequest/' + job.demand.id,
+                    method: 'GET'
+                }).then(function (response) {
+                    $scope.currentDemandItemList = response.data;
+                });
+                
                 $scope.modal.show();
             };
 
@@ -52,6 +69,7 @@ angular.module('starter.controllers')
                                 }).then(function (response) {
 
                                     if (response.data.isCancelled) {
+                                        console.log("Job Successfully Cancelled");
                                         $scope.modal.hide();
           
                                         $scope.showAlert = function () {
@@ -104,6 +122,8 @@ angular.module('starter.controllers')
             $scope.$on('modal.removed', function () {
                 // Execute action
             });
+            
+            $scope.myJobStatus = "Accepted";
 
         })
         ;

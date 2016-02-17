@@ -1,47 +1,153 @@
-<ion-view view-title="My Jobs">
+<ion-view view-title="My Jobs" class="jobs">
     <ion-nav-buttons side="secondary">
         <button class="button button-clear button-positive" ng-click="openModal()">Edit <i class="ion-compose" style="padding-left:2px"></i></button>
     </ion-nav-buttons>
     <ion-content>
-        <ul class="list">
-            <li class="item item-text-wrap item-button-right" ng-repeat="job in jobList">
-                    <div class="buttons">
-<!--                    <button class="button button-energized">
-                        <i class="icon ion-android-locate"></i>
-                    </button>-->
-<!--                    <button class="button button-dark" ng-click="view(job)">
-                        <i class="icon ion-android-arrow-forward"></i>
-                    </button>-->
-                    <button ng-show="job.status === 'Completed'" class="button button-energized">Completed</button>
-      
-                    <button ng-show="job.status === 'Accepted'" class="button button-positive" ng-click="view(job)">View</button>
 
-                    <button ng-show="job.status === 'Cancelled'" class="button button-assertive">Cancelled</button>
+        <div class="button-bar button-block">
+            <a class="button button-calm" ng-model="myJobStatus" ng-click="myJobStatus = 'Accepted'"><strong>In Progress</strong></a>
+            <a class="button button-balanced" ng-model="myJobStatus" ng-click="myJobStatus = 'Completed'"><strong>Completed</strong></a>
+            <a class="button button-assertive" ng-model="myJobStatus" ng-click="myJobStatus = 'Cancelled'"><strong>Cancelled</strong></a>
+        </div>
+        <div class="item item-divider myjobstatustitle">
+            <strong>My {{myJobStatus}} Jobs</strong>
+        </div>
+        
+        <div class="list">
+            <div ng-show="myJobStatus === 'Accepted'">
+            <div class="item item-text-wrap" ng-repeat="job in jobList" ng-show="job.status === 'Accepted'" >
+                <div class="item item-divider reducepaddingnone">
+                    <strong>Delivery Details</strong>
+                </div>
+
+                <label class="item item-input reducepaddingnone">
+                    <span class="input-label reduceinputlabel"><i class="ion-calendar"></i> Date</span>
+                    <div class="item-text-wrap editwidth">{{job.deliveryDate}}</div>
+                </label>
+                <label class="item item-input reducepaddingnone">
+                    <span class="input-label reduceinputlabel"><i class="ion-ios-location"></i> Pickup</span>
+                    <div class="item-text-wrap editwidth">{{job.demand.supplier.address}} </div>
+                </label>
+                <label class="item item-input reducepaddingnone">
+                    <span class="input-label reduceinputlabel"><i class="ion-ios-location"></i> Delivery</span>
+                    <div class="item-text-wrap editwidth">{{job.demand.user.address}}</div>
+                </label>
+                <label class="item item-input reducepaddingnone">
+                    <span class="input-label reduceinputlabel"><i class="ion-clock"></i> Pickup Time</span>
+                    <div class="item-text-wrap editwidth">{{job.collectionTime}}</div>
+                </label>
+                <label class="item item-input reducepaddingnone">
+                    <span class="input-label reduceinputlabel"><i class="ion-clock"></i> Delivery Time</span>
+                    <div class="item-text-wrap editwidth">{{job.deliveryTime}}</div>
+                </label>
+
+                <div class="reducebuttonpadding" style="text-align:right"><button class="button button-small button-calm icon-right" ng-click="view(job)"><strong>View Job Details <i class="ion-arrow-right-b"></i></strong></button></div>
+
+                <!--                    <div class="buttons">-->
+                <!--                    <button class="button button-energized">
+                                        <i class="icon ion-android-locate"></i>
+                                    </button>-->
+                <!--                    <button class="button button-dark" ng-click="view(job)">
+                                        <i class="icon ion-android-arrow-forward"></i>
+                                    </button>-->
+                <!--                    <button ng-show="job.status === 'Completed'" class="button button-energized">Completed</button>
+                      
+                                    <button ng-show="job.status === 'Accepted'" class="button button-positive" ng-click="view(job)">View</button>
+                
+                                    <button ng-show="job.status === 'Cancelled'" class="button button-assertive">Cancelled</button>-->
+            </div>
+            </div>
+            <div ng-show="myJobStatus === 'Completed'">
+                <div class="item item-text-wrap" ng-repeat="job in jobList" ng-show="job.status === 'Completed'">
+                    <div class="item item-divider reducepaddingnone">
+                        <strong>Delivery Details</strong>
+                    </div>
+
+                    <label class="item item-input reducepaddingnone">
+                        <span class="input-label reduceinputlabel"><i class="ion-calendar"></i> Date</span>
+                        <div class="item-text-wrap editwidth">{{job.deliveryDate}}</div>
+                    </label>
+                    <label class="item item-input reducepaddingnone">
+                        <span class="input-label reduceinputlabel"><i class="ion-ios-location"></i> Pickup</span>
+                        <div class="item-text-wrap editwidth">{{job.demand.supplier.address}} </div>
+                    </label>
+                    <label class="item item-input reducepaddingnone">
+                        <span class="input-label reduceinputlabel"><i class="ion-ios-location"></i> Delivery</span>
+                        <div class="item-text-wrap editwidth">{{job.demand.user.address}}</div>
+                    </label>
+                    <label class="item item-input reducepaddingnone">
+                        <span class="input-label reduceinputlabel"><i class="ion-clock"></i> Pickup Time</span>
+                        <div class="item-text-wrap editwidth">{{job.collectionTime}}</div>
+                    </label>
+                    <label class="item item-input reducepaddingnone">
+                        <span class="input-label reduceinputlabel"><i class="ion-clock"></i> Delivery Time</span>
+                        <div class="item-text-wrap editwidth">{{job.deliveryTime}}</div>
+                    </label>
+
+                    <div class="reducebuttonpadding" style="text-align:right"><button class="button button-small button-calm icon-right" ng-click="view(job)"><strong>View Job Details <i class="ion-arrow-right-b"></i></strong></button></div>
+
+                    <!--                    <div class="buttons">-->
+                    <!--                    <button class="button button-energized">
+                                            <i class="icon ion-android-locate"></i>
+                                        </button>-->
+                    <!--                    <button class="button button-dark" ng-click="view(job)">
+                                            <i class="icon ion-android-arrow-forward"></i>
+                                        </button>-->
+                    <!--                    <button ng-show="job.status === 'Completed'" class="button button-energized">Completed</button>
+                          
+                                        <button ng-show="job.status === 'Accepted'" class="button button-positive" ng-click="view(job)">View</button>
+                    
+                                        <button ng-show="job.status === 'Cancelled'" class="button button-assertive">Cancelled</button>-->
 
                 </div>
-                    <h3>{{job.demand.supply.itemName}}</h3>
-                       <h3>Quantity: {{job.demand.quantityDemanded}} pcs</h3>
-                    
-                    <label for="input2">
-                        <p class="jobdetails-supplier-myjobs">
-                            <b>Supplier:</b>
-                            {{job.demand.supply.user.address}}
-                        </p>
+            </div>
+            <div ng-show="myJobStatus === 'Cancelled'">
+                <div class="item item-text-wrap" ng-repeat="job in jobList" ng-show="job.status === 'Cancelled'">
+                    <div class="item item-divider reducepaddingnone">
+                        <strong>Delivery Details</strong>
+                    </div>
+
+                    <label class="item item-input reducepaddingnone">
+                        <span class="input-label reduceinputlabel"><i class="ion-calendar"></i> Date</span>
+                        <div class="item-text-wrap editwidth">{{job.deliveryDate}}</div>
                     </label>
+                    <label class="item item-input reducepaddingnone">
+                        <span class="input-label reduceinputlabel"><i class="ion-ios-location"></i> Pickup</span>
+                        <div class="item-text-wrap editwidth">{{job.demand.supplier.address}} </div>
+                    </label>
+                    <label class="item item-input reducepaddingnone">
+                        <span class="input-label reduceinputlabel"><i class="ion-ios-location"></i> Delivery</span>
+                        <div class="item-text-wrap editwidth">{{job.demand.user.address}}</div>
+                    </label>
+                    <label class="item item-input reducepaddingnone">
+                        <span class="input-label reduceinputlabel"><i class="ion-clock"></i> Pickup Time</span>
+                        <div class="item-text-wrap editwidth">{{job.collectionTime}}</div>
+                    </label>
+                    <label class="item item-input reducepaddingnone">
+                        <span class="input-label reduceinputlabel"><i class="ion-clock"></i> Delivery Time</span>
+                        <div class="item-text-wrap editwidth">{{job.deliveryTime}}</div>
+                    </label>
+                    <label class="item item-input reducepaddingnone">
+                        <span class="input-label reduceinputlabel"><i class="ion-clipboard"></i> Reason</span>
+                        <div class="item-text-wrap editwidth">{{job.demand.comments}}</div>
+                    </label>
+                    <div class="reducebuttonpadding" style="text-align:right"><button class="button button-small button-calm icon-right" ng-click="view(job)"><strong>View Job Details <i class="ion-arrow-right-b"></i></strong></button></div>
+
+                    <!--                    <div class="buttons">-->
+                    <!--                    <button class="button button-energized">
+                                            <i class="icon ion-android-locate"></i>
+                                        </button>-->
+                    <!--                    <button class="button button-dark" ng-click="view(job)">
+                                            <i class="icon ion-android-arrow-forward"></i>
+                                        </button>-->
+                    <!--                    <button ng-show="job.status === 'Completed'" class="button button-energized">Completed</button>
+                          
+                                        <button ng-show="job.status === 'Accepted'" class="button button-positive" ng-click="view(job)">View</button>
                     
-                        <label for="input2">
-                            <p class="jobdetails-receiver-myjobs">
-                                <b>Receiver:</b>
-                                {{job.demand.user.address}}
-                            </p>
-                        </label>
-                    
-<!--                    <p style=" line-height:120%">From: {{job.demand.supply.user.address}}</p>
-                    <p style=" line-height:120%">To: {{job.demand.user.address}}</p>-->
-<!--                    <h3>Receiver <p>{{job.demand.user.organizationName}}</p></h3>
-                    <h3>Quantity <p>{{job.demand.quantityDemanded}}</p></h3>
-                    <h3>Expiry Date <p>{{job.expiryDate}}</p></h3>-->
-            </li>
-        </ul>
+                                        <button ng-show="job.status === 'Cancelled'" class="button button-assertive">Cancelled</button>-->
+
+                </div>
+            </div>
+        </div>
     </ion-content>
 </ion-view>

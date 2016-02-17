@@ -10,7 +10,7 @@ angular.module('starter.controllers')
                 'email': '',
                 'pocName': '',
                 'pocNumber': '',
-                'licenseNumber': '',
+                'description': '',
                 'role': 'Volunteer'
             };
             
