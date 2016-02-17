@@ -3,7 +3,27 @@ angular.module('starter.controllers')
         .controller('MyJobsCtrl', function ($scope, $state, $stateParams, $http, $filter, $localstorage, api, $ionicPopup, $ionicModal) {
             $scope.username = $localstorage.get('username');
             $scope.userID = $localstorage.get('userID');
-
+            
+            $scope.doRefresh = function() {
+                $http({
+                url: api.endpoint + 'GetJobListByUserIdRequest/' + $scope.userID,
+                method: 'GET'
+            }).then(function (response) {
+                $scope.jobList = response.data;
+            });
+            
+             $http({
+                url: api.endpoint + 'GetDemandItemListRequest',
+                method: 'GET'
+            }).then(function (response) {
+                $scope.demandItemList = response.data;
+                console.log("GetDemandItemListRequest SUCCESS");
+                console.log($scope.demandItemList);
+            }).finally(function() {
+       // Stop the ion-refresher from spinning
+       $scope.$broadcast('scroll.refreshComplete');
+     });
+  };
             //retriving all the jobs for the user
             $http({
                 url: api.endpoint + 'GetJobListByUserIdRequest/' + $scope.userID,

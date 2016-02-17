@@ -1,6 +1,6 @@
 angular.module('starter.controllers')
 
-        .controller('AccountCtrl', function ($scope, $state, $http, $localstorage, api, $ionicPopup, $ionicModal) {
+        .controller('AccountCtrl', function ($scope, $state, $http, $localstorage, api, $ionicHistory, $ionicPopup, $ionicModal) {
             $scope.username = $localstorage.get('username');
 
             console.log($scope.username);
@@ -16,7 +16,11 @@ angular.module('starter.controllers')
             });
 //            }
             $scope.logout = function () {
+                $window.localStorage.clear();
+                $ionicHistory.clearCache();
+                $ionicHistory.clearHistory();
                 $state.go('login');
+
             }
 
             $scope.updateProfile = function () {
@@ -41,7 +45,7 @@ angular.module('starter.controllers')
                                 $state.go('tab.account');
                             } else {
                                 $scope.errorList = response.data.errorList;
-                                
+
                                 var updateFailPopup = $ionicPopup.alert({
                                     title: 'Update Profile Failed',
                                     template: '<div ng-repeat="error in errorList"><font style="color: red">{{$index + 1}}. {{error}}</font></div>',
@@ -60,7 +64,7 @@ angular.module('starter.controllers')
                     }
                 });
             }
-            
+
             $scope.cancel = function () {
                 $scope.user = angular.copy($scope.originalUser);
                 $scope.modal.hide();

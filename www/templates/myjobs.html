@@ -2,8 +2,14 @@
     <ion-nav-buttons side="secondary">
         <button class="button button-clear button-positive" ng-click="openModal()">Edit <i class="ion-compose" style="padding-left:2px"></i></button>
     </ion-nav-buttons>
+    
     <ion-content>
-
+        
+        <ion-refresher
+            pulling-text="Pull to refresh..."
+            on-refresh="doRefresh()">
+        </ion-refresher>
+        
         <div class="button-bar button-block">
             <a class="button button-calm" ng-model="myJobStatus" ng-click="myJobStatus = 'Accepted'"><strong>In Progress</strong></a>
             <a class="button button-balanced" ng-model="myJobStatus" ng-click="myJobStatus = 'Completed'"><strong>Completed</strong></a>

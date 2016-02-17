@@ -1,8 +1,13 @@
-<ion-view view-title="My Current Location">      
+<ion-view view-title="Current Location">      
     <ion-nav-buttons side="left">
         <button class="button button-clear" ng-click="myGoBack()" >
             <i class="icon ion-ios-arrow-back"></i>
             Back</button>
+        
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+         <button class="button button-clear button-positive" ng-click="doRefresh()">Refresh <i class="ion-refresh" style="padding-left:2px"></i></button>
+    
     </ion-nav-buttons>
     <ion-content data-tap-disabled="true">
         <div id="map"></div>
