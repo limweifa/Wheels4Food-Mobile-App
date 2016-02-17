@@ -10,7 +10,7 @@ angular.module('starter.controllers')
                 url: api.endpoint + 'GetUserByUsernameRequest/' + $scope.username,
                 method: 'GET'
             }).then(function (response) {
-                console.log(response);
+                console.log("ACCOUNT RESPONSE:" + response.data);
                 $scope.user = response.data;
                 $scope.originalUser = angular.copy($scope.user);
             });
