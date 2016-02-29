@@ -1,6 +1,6 @@
 angular.module('starter.controllers')
 
-        .controller('AccountCtrl', function ($scope, $state, $http, $localstorage, api, $ionicHistory, $ionicPopup, $ionicModal) {
+        .controller('AccountCtrl', function ($scope, $state, $http, $localstorage,$timeout, api, $ionicHistory, $ionicPopup, $ionicModal) {
             $scope.username = $localstorage.get('username');
 
             console.log($scope.username);
@@ -16,10 +16,13 @@ angular.module('starter.controllers')
             });
 //            }
             $scope.logout = function () {
-                $localstorage.clear();
-                $ionicHistory.clearCache();
-                $ionicHistory.clearHistory();
                 $state.go('login');
+                $timeout(function () {
+                    $ionicHistory.clearCache();
+                    $ionicHistory.clearHistory();
+                    $localstorage.clear();
+                }, 300);
+                
 
             }
 

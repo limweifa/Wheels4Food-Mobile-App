@@ -99,6 +99,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
                     })
 
                     .state('tab.jobs', {
+                        cache: false,
                         url: '/jobs',
 //                        templateUrl: 'templates/account.html',
 //                        controller: 'AccountCtrl'
@@ -111,6 +112,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
                     })
 
                     .state('tab.myjobs', {
+                        cache: false,
                         url: '/myjobs',
                         views: {
                             'myjobs': {
@@ -120,16 +122,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
                         }
                     })
                     
-                    .state('tab.myacceptedjobs', {
-                        url: '/myacceptedjobs',
-                        views: {
-                            'myjobs': {
-                                templateUrl: 'templates/myacceptedjobs.html',
-                                controller: 'MyJobsCtrl'
-                            }
-                        }
-                    })
-
                     .state('maps', {
                         url: '/maps',
                         templateUrl: 'templates/maps.html',
