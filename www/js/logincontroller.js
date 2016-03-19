@@ -52,10 +52,10 @@
                                     $scope.error = response.data.error;
                                     $scope.loginFailed = true;
                                     
-//                                    var alertPopup = $ionicPopup.alert({
-//                                        title: 'Login failed!',
-//                                        template: 'Please check your credentials!'
-//                                    });
+                                    var alertPopup = $ionicPopup.alert({
+                                        title: 'Invalid Login',
+                                        template: 'Username or Password is incorrect'
+                                    });
                                 }
                             }, 800);
                         }, function (error) {
@@ -63,21 +63,21 @@
                         });
                     };
                     
-                    $scope.logout = function() {
-                        console.log("LOGOUT");
-                        var confirmPopup = $ionicPopup.confirm({
-                          title: 'Consume Ice Cream',
-                          template: 'Are you sure you want to eat this ice cream?'
-                        });
-
-                        confirmPopup.then(function(res) {
-                          if(res) {
-                            console.log('You are sure');
-                          } else {
-                            console.log('You are not sure');
-                          }
-                        });
-                    };
+//                    $scope.logout = function() {
+//                        console.log("LOGOUT");
+//                        var confirmPopup = $ionicPopup.confirm({
+//                          title: 'Consume Ice Cream',
+//                          template: 'Are you sure you want to eat this ice cream?'
+//                        });
+//
+//                        confirmPopup.then(function(res) {
+//                          if(res) {
+//                            console.log('You are sure');
+//                          } else {
+//                            console.log('You are not sure');
+//                          }
+//                        });
+//                    };
                     
                 }
             ]);
