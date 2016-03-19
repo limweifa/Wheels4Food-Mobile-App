@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngMessages', 'ionic-timepicker','ngCordova', 'uiGmapgoogle-maps'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngMessages', 'ionic-timepicker', 'ngCordova', 'uiGmapgoogle-maps'])
 
         .run(function ($ionicPlatform) {
             $ionicPlatform.ready(function () {
@@ -37,6 +37,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
                     },
                     getObject: function (key) {
                         return JSON.parse($window.localStorage[key] || '{}');
+                    },
+                    clear: function (){
+                         $window.localStorage.clear();
                     }
                 }
             }])
@@ -71,45 +74,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
                     // Each tab has its own nav history stack:
 
-//                    .state('tab.dash', {
-//                        url: '/dash',
-//                        views: {
-//                            'tab-dash': {
-//                                templateUrl: 'templates/tab-dash.html',
-////                                controller: 'DashCtrl'
-//                            }
-//                        }
-//                    })
-
-//                    .state('tab.chats', {
-//                        url: '/chats',
-//                        views: {
-//                            'tab-chats': {
-//                                templateUrl: 'templates/tab-chats.html',
-//                                controller: 'ChatsCtrl'
-//                            }
-//                        }
-//                    })
-//                    .state('tab.chat-detail', {
-//                        url: '/chats/:chatId',
-//                        views: {
-//                            'tab-chats': {
-//                                templateUrl: 'templates/chat-detail.html',
-//                                controller: 'ChatDetailCtrl'
-//                            }
-//                        }
-//                    })
-
-//                    .state('tab.account', {
-//                        //url: '/account',
-//                        views: {
-//                            'tab-account': {
-//                                templateUrl: 'templates/tab-account.html',
-//                                //controller: 'AccountCtrl'
-//                            }
-//                        }
-//                    })
-
                     .state('login', {
                         url: '/login',
                         templateUrl: 'templates/login.html',
@@ -133,8 +97,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
                             }
                         }
                     })
-                    
+
                     .state('tab.jobs', {
+                        cache: false,
                         url: '/jobs',
 //                        templateUrl: 'templates/account.html',
 //                        controller: 'AccountCtrl'
@@ -145,8 +110,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
                             }
                         }
                     })
-                    
+
                     .state('tab.myjobs', {
+                        cache: false,
                         url: '/myjobs',
                         views: {
                             'myjobs': {
@@ -189,8 +155,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         .config(['apiProvider',
             function (apiProvider) {
                 //http://localhost:8100 for ionic serve testing
-//                apiProvider.setAPIEndpoints('http://localhost:8100');
+                //apiProvider.setAPIEndpoints('http://localhost:8100');
+                //http://192.168.1.19:8100 for livereload testing
+                //apiProvider.setAPIEndpoints('http://192.168.1.19:8100');
                 //http://apps.greentransformationlab.com/Wheels4Food for emulator and native mobile testing
                 apiProvider.setAPIEndpoints('http://apps.greentransformationlab.com/Wheels4Food');
             }
-        ]);
+        ])
+
+        .config(['$ionicConfigProvider', function ($ionicConfigProvider) {
+
+                $ionicConfigProvider.tabs.position('top'); // other values: top
+
+            }]);
