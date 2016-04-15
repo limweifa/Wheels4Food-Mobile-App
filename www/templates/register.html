@@ -22,22 +22,22 @@
                     <input type="password" placeholder="Confirm Password" ng-model="registration.confirmPassword">
                 </label>
                 
-                <label class="item item-input item-select">
-                    <div class="input-label item-text-wrap">
-                    Organization Name
+                <label class="item item-input item-select item-text-wrap">
+                    <div class="input-label" style="font-size:14px">
+                    Organization
                     </div>
                     <select ng-model="registration.organizationName">
                         <option ng-repeat="VWO in VWOList">{{VWO.organizationName}}</option>
                     </select>
                 </label>
                 
-                <label class="item item-input item-stacked-label">
+<!--                <label class="item item-input item-stacked-label">
                     <span class="input-label">Organization Description</span>
                     <div class="item-text-wrap">
                         <textarea placeholder="Organization Description" ng-model="registration.description"></textarea>
-<!--                    <ion-textarea></ion-textarea>-->
+                    <ion-textarea></ion-textarea>
                     </div>
-                </label>
+                </label>-->
                 
                 <label class="item item-input item-stacked-label">
                     <span class="input-label">Email</span>
@@ -54,11 +54,10 @@
                     <input type="text" placeholder="Contact Number" ng-model="registration.pocNumber">
                 </label>
                 <br>
-                <button class="button button-block btn green" ng-click="submit()">
+                <button class="button button-block btn blue" ng-click="submit()">
                     Sign Up Now!
                 </button>
           </div>
-                 </div>
             <!-- Added -->
             
             <!-- REMOVED  

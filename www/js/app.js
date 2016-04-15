@@ -85,6 +85,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
                         templateUrl: 'templates/register.html',
                         controller: 'RegisterCtrl'
                     })
+                    
+                    .state('resetpassword', {
+                        cache: false,
+                        url: '/resetpassword',
+                        templateUrl: 'templates/resetpassword.html',
+                        controller: 'ResetPasswordCtrl'
+                    })
 
                     .state('tab.account', {
                         url: '/account',
@@ -123,9 +130,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
                     })
                     
                     .state('maps', {
+                        cache: false,
                         url: '/maps',
                         templateUrl: 'templates/maps.html',
                         controller: 'MapCtrl'
+                    })
+                    
+                    .state('maprouting', {
+                        cache: false,
+                        url: '/maprouting',
+                        templateUrl: 'templates/maprouting.html',
+                        controller: 'MapRoutingCtrl'
                     })
 
             // if none of the above states are matched, use this as the fallback
@@ -136,16 +151,19 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         .provider('api', [
             function () {
                 var apiEndpoint = '';
+                var baseUrl = '';
                 return {
                     setAPIEndpoints: function (baseEndPoint) {
                         apiEndpoint = baseEndPoint + '/rest/';
+                        baseUrl = baseEndPoint;
                     },
                     getAPIEndpoint: function () {
                         return apiEndpoint;
                     },
                     $get: function () {
                         return {
-                            endpoint: apiEndpoint
+                            endpoint: apiEndpoint,
+                            baseUrl: baseUrl
                         };
                     }
                 };
@@ -155,11 +173,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         .config(['apiProvider',
             function (apiProvider) {
                 //http://localhost:8100 for ionic serve testing
-                //apiProvider.setAPIEndpoints('http://localhost:8100');
+                apiProvider.setAPIEndpoints('http://localhost:8100');
                 //http://192.168.1.19:8100 for livereload testing
                 //apiProvider.setAPIEndpoints('http://192.168.1.19:8100');
                 //http://apps.greentransformationlab.com/Wheels4Food for emulator and native mobile testing (LIVE SERVER)
-                apiProvider.setAPIEndpoints('http://apps.greentransformationlab.com/Wheels4Food');
+                //apiProvider.setAPIEndpoints('http://apps.greentransformationlab.com/Wheels4Food');
                 //http://apps.greentransformationlab.com:8081/Wheels4Food for emulator and native mobile testing (TEST SERVER)
                 //apiProvider.setAPIEndpoints('http://greentransformationlab.com:8081/Wheels4Food');
             }

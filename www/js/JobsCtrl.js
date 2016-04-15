@@ -4,10 +4,14 @@ angular.module('starter.controllers')
             console.log("JobsCtrl");
             $scope.username = $localstorage.get('username');
             $scope.userID = $localstorage.get('userID');
+            $scope.organizationName = $localstorage.get('organizationName');
+            
+            console.log("ORGANIZATION NAME IS: " + $scope.organizationName);
             
             $scope.doRefresh = function () {
                 $http({
-                    url: api.endpoint + 'GetJobListByUserIdRequest/' + $scope.userID,
+                    //url: api.endpoint + 'GetJobListByUserIdRequest/' + $scope.userID,
+                    url: api.endpoint + 'GetJobListByOrganizationNameRequest/' + $scope.organizationName,
                     method: 'GET'
                 }).then(function (response) {
                     $scope.jobList = response.data;
@@ -27,14 +31,15 @@ angular.module('starter.controllers')
             };
             
             $http({
-                url: api.endpoint + 'GetJobListRequest',
+                //url: api.endpoint + 'GetJobListRequest',
+                url: api.endpoint + 'GetJobListByOrganizationNameRequest/' + $scope.organizationName,
                 method: 'GET'
             }).then(function (response) {
                 $scope.jobList = response.data;
                 console.log("JOBLIST");
                 console.log(response.data);
-                $scope.currentPage = 1;
-                $scope.pageSize = 10;
+//                $scope.currentPage = 1;
+//                $scope.pageSize = 10;
             });
 
             $http({
@@ -181,21 +186,21 @@ angular.module('starter.controllers')
                     if (response.data.isAccepted) {
                         console.log("Job Successfully Accepted!");
                         $scope.modal.hide();
-                        
+//                        $state.go('tab.myjobs');
 //                        $state.go($state.current, $stateParams, {reload: true, inherit: false});
 //                        $state.go('tab.myjobs');
 //                        $scope.modal.hide();
-//                        $scope.showAlert = function () {
-//                            var alertAcceptJobSuccessPopup = $ionicPopup.alert({
-//                                title: 'Job Successfully Accepted',
-//                                template: 'Thank you for helping out!'
-//                            });
-//
-//                            alertAcceptJobSuccessPopup.then(function (res) {
-//                                $state.go('myjobs');
-//                                console.log('Thank you for helping out!');
-//                            });
-//                        };
+                        $scope.showAlert = function () {
+                            var alertAcceptJobSuccessPopup = $ionicPopup.alert({
+                                title: 'Job Successfully Accepted',
+                                template: 'Thank you for helping out!'
+                            });
+
+                            alertAcceptJobSuccessPopup.then(function (res) {
+                                $state.go('tab.myjobs');
+                                console.log('Thank you for helping out!');
+                            });
+                        };
 
                     }
                     $scope.showAlert = function () {
@@ -269,6 +274,10 @@ angular.module('starter.controllers')
 
             $scope.goToMap = function () {
                 $state.go('maps');
+            };
+            
+            $scope.goToMapRouting = function () {
+                $state.go('maprouting');
             };
 
         })

@@ -11,7 +11,7 @@
             <div class="item item-text-wrap item-icon-left" ng-repeat="demandItem in currentDemandItemList">
                 <i class="icon ion-ios-box"></i>
                 <p>{{demandItem.supply.itemName}}</p>
-                <span class="badge badge-calm">{{demandItem.quantityDemanded}} {{demandItem.supply.unit}}</span>
+                <span class="badge badge-calm">{{demandItem.quantityDemanded}}</span>
             </div>
             <div class="item item-divider">
                 Delivery Details
@@ -91,7 +91,7 @@
         <div class="item item-input-inset">
 
             <label class="item-input-wrapper">
-                <span class="input-label">Pickup</span> 
+                <span class="input-label ">Pickup&nbsp;&nbsp;</span> 
                 <input type="text" placeholder="Indicate pickup time" value="{{collectionTimeTwelveHours}}">
 
                 <!--                    <ionic-timepicker input-obj="timePickerObjectPickup">
@@ -109,7 +109,7 @@
 
         <div class="item item-input-inset">
             <label class="item-input-wrapper">
-                <span class="input-label">Delivery</span>
+                <span class="input-label ">Delivery</span>
                 <!--                    <ionic-timepicker input-obj="timePickerObjectDeliver">
                                         <standard-time-meridian etime='timePickerObjectDeliver.inputEpochTime'></standard-time-meridian>-->
                 <!--                        <input type="text" placeholder="Click to indicate time" value="{{deliveryTimeTwelveHours}}">

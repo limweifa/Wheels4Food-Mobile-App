@@ -1,5 +1,5 @@
 <ion-view view-title="My Jobs" class="jobs">
-    <ion-content>
+    <ion-content overflow-scroll="true">
         
         <ion-refresher
             pulling-text="Pull to refresh..."
@@ -43,8 +43,10 @@
                     <div class="item-text-wrap editwidth">{{job.deliveryTime}}</div>
                 </label>
 
-                <div class="reducebuttonpadding" style="text-align:right"><button class="button button-small button-calm icon-right" ng-click="view(job)"><strong>View Job Details <i class="ion-arrow-right-b"></i></strong></button></div>
-
+                <!--<div class="reducebuttonpadding" style="text-align:right"><button class="button button-small button-calm icon-right" ng-click="view(job)"><strong>View Job Details <i class="ion-arrow-right-b"></i></strong></button></div>-->
+                <div class="reducebuttonpadding" style="text-align:right"><button class="button button-small button-calm icon-right" ng-click="view(job)"><strong>View Job Details  <i class="ion-arrow-right-b"></i></strong></button></div>
+                <div class="reducebuttonpadding" style="text-align:right"><button class="button button-small button-calm icon-right" ng-click="goToMapRouting()"><strong>View Directions  <i class="ion-android-map"></i></strong></button></div>
+                <br>
                 <!--                    <div class="buttons">-->
                 <!--                    <button class="button button-energized">
                                         <i class="icon ion-android-locate"></i>
@@ -87,7 +89,7 @@
                     </label>
 
                     <div class="reducebuttonpadding" style="text-align:right"><button class="button button-small button-calm icon-right" ng-click="view(job)"><strong>View Job Details <i class="ion-arrow-right-b"></i></strong></button></div>
-
+                    <br>
                     <!--                    <div class="buttons">-->
                     <!--                    <button class="button button-energized">
                                             <i class="icon ion-android-locate"></i>
@@ -134,6 +136,7 @@
                         <div class="item-text-wrap editwidth">{{job.demand.comments}}</div>
                     </label>
                     <div class="reducebuttonpadding" style="text-align:right"><button class="button button-small button-calm icon-right" ng-click="view(job)"><strong>View Job Details <i class="ion-arrow-right-b"></i></strong></button></div>
+                    <br>
 
                     <!--                    <div class="buttons">-->
                     <!--                    <button class="button button-energized">

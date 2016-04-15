@@ -2,7 +2,7 @@
     <ion-header-bar>
         <h1 class="title">Edit Profile</h1>
 <!--         <button class="button button-clear" ng-click="cancel()">Cancel</button>-->
-        <button class="button button-clear" ng-click="cancel()">Cancel</button>
+        <button class="button button-clear" ng-click="cancel(1)">Cancel</button>
     </ion-header-bar>
     <ion-content overflow-scroll="false">
         <div class="list">
@@ -19,12 +19,12 @@
                 <input type="text" value="{{user.email}}" ng-model="user.email">
             </label>
             <label class="item item-input item-stacked-label">
-                <span class="input-label">Organisation's Address</span>
+                <span class="input-label">Organization's Address</span>
                 <input type="text" value="{{user.address}}" ng-model="user.address">
             </label>
             <label class="item item-input item-stacked-label">
-                    <span class="input-label">Organization Description</span>
-                    <input type="text" value="{{user.description}}" ng-model="user.description">
+                    <span class="input-label">Organization Description</span> 
+                    <textarea value="{{user.description}}" ng-model="user.description"></textarea>
             </label>
             
             <label class="item item-input item-stacked-label">

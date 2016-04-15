@@ -246,7 +246,7 @@ angular.module('starter.controllers')
 //                    console.log("MARKERS ARRAY:" + markers);
 
 
-//MARKET FOR CURRENT LOCATION
+//MARKER FOR CURRENT LOCATION
 //                    google.maps.event.addListenerOnce(map, 'idle', function () {
 //
 //                        var marker = new google.maps.Marker({

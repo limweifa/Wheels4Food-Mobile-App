@@ -1,5 +1,5 @@
 <ion-view view-title="Jobs" class="jobs">
-    <ion-content>
+    <ion-content overflow-scroll="true">
         
         <ion-refresher
             pulling-text="Pull to refresh..."
@@ -9,15 +9,19 @@
         <button class="button button-block ion-android-locate padding-right  btn-findlocation blue-acc removebottommargin" ng-click="goToMap()">
             Find My Current Location
         </button>
+        
+<!--        <button class="button button-block ion-android-locate padding-right  btn-findlocation blue-acc removebottommargin" ng-click="goToMapRouting()">
+            Map Routing
+        </button>-->
         <div class="list" >
             <div ng-repeat="job in jobList" class="item item-text-wrap" >
-                <div class="item item-divider reducepaddingnone">
+<!--                <div class="item item-divider reducepaddingnone">
                     <strong>Items</strong>
                 </div>
                 <div ng-repeat="demandItem in demandItemList" ng-show="demandItem.demand.id === job.demand.id">
 
                     <p><i class="icon ion-pricetag"></i> {{demandItem.supply.itemName}} </p>
-                </div>
+                </div>-->
                 <div class="item item-divider reducepaddingnone">
                     <strong>Delivery Details</strong>
                 </div>
@@ -33,9 +37,18 @@
                     <span class="input-label reduceinputlabel"><i class="ion-ios-location"></i> Delivery</span>
                     {{job.demand.user.address}}
                 </label>
-
+                <br>
+<!--                <div class="row">
+                    <div class="col col-40 col-offset-20">
+                        <button class="button button-small button-block button-calm icon-right"><strong>View Directions  <i class="ion-android-map"></i></strong></button>
+                    </div>
+                    <div class="col col-40">
+                        <button class="button button-small button-block button-calm icon-right" ng-click="view(job)"><strong>View Job Details  <i class="ion-arrow-right-b"></i></strong></button>
+                    </div>
+                </div>-->
                 <div class="reducebuttonpadding" style="text-align:right"><button class="button button-small button-calm icon-right" ng-click="view(job)"><strong>View Job Details  <i class="ion-arrow-right-b"></i></strong></button></div>
-
+                <div class="reducebuttonpadding" style="text-align:right"><button class="button button-small button-calm icon-right" ng-click="goToMapRouting()"><strong>View Directions  <i class="ion-android-map"></i></strong></button></div>
+                <br>
             </div>
         </div>
     </ion-content>

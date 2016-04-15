@@ -29,6 +29,7 @@
                                 'Content-Type': 'application/json',
                             }
                         }).then(function (response) {
+                            console.log("USER INFOOOOOOOOOOOOOOOOOOOOOOOOO");
                             console.log(response);
                             $timeout(function () {
                                 $scope.isLogging = false;
@@ -37,6 +38,7 @@
                                     $localstorage.set('username', response.data.user.username);
                                     $localstorage.set('userID', response.data.user.id);
                                     $localstorage.set('role', response.data.user.role);
+                                    $localstorage.set('organizationName', response.data.user.organizationName);
                                     
 //                                    localStorageService.set('authorizationData', {
 //                                        userID: response.data.user.id,

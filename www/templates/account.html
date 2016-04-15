@@ -5,50 +5,52 @@
     </ion-nav-buttons>-->
     
     
-    <ion-content class="padding-profile">
+    <ion-content class="padding-profile" overflow-scroll="true">
        
         <div class="list">
             <center class="profile-center">
             <br>
-            <img class="img-circle" src="images/funky-Button-user.svg" width="30%" height="30%">
+            <img class="img-circle" src="images/funky-Button-user.svg" width="20%" height="20%">
                 <h1>{{user.username}}</h1>
                 <p>{{user.organizationName}}</p>
                
                 <br>
-                <button class="col col-90 button button-block ion-edit padding-right btn blue-acc" ng-click="openModal()">
+                <button class="col col-90 button button-block ion-edit btn-profile blue-acc" ng-click="openModal(1)">
                     Edit Profile
                  </button>  
                 
-
+                         <button class="col col-90 button button-block ion-edit btn-profile blue-acc" ng-click="openModal(2)">
+                    Change Password
+                </button>
 
             </center>
-        
-            <a href="#" class="item item-avatar">
+
+            <a href="#" class="item item-avatar item-text-wrap">
                 <i class="ion-ios-email-outline"></i>
                 <h2>Email</h2>
                 <p>{{user.email}}</p>
             </a>
-            <a href="#" class="item item-avatar">
+            <a href="#" class="item item-avatar item-text-wrap">
                 <i class="ion-ios-location-outline"></i>
                 <h2>Organisation's Address</h2>
                 <p>{{user.address}}</p>
             </a>
-            <a href="#" class="item item-avatar">
+            <a href="#" class="item item-avatar item-text-wrap">
                 <i class="ion-ios-location-outline"></i>
                 <h2>Organisation's Description</h2>
                 <p>{{user.description}}</p>
             </a>
-            <a href="#" class="item item-avatar">
+            <a href="#" class="item item-avatar item-text-wrap">
                 <i class="ion-ios-navigate-outline"></i>
                 <h2>Postal Code</h2>
                 <p>Singapore {{user.postalCode}}</p>
             </a>
-            <a href="#" class="item item-avatar">
+            <a href="#" class="item item-avatar item-text-wrap">
                 <i class="ion-ios-body-outline"></i>
                 <h2>Point of Contact's Name</h2>
                 <p>{{user.pocName}}</p>
             </a>
-            <a href="#" class="item item-avatar">
+            <a href="#" class="item item-avatar item-text-wrap">
                 <i class="ion-ios-telephone-outline"></i>
                 <h2>Point of Contact's Number</h2>
                 <p>{{user.pocNumber}}</p>

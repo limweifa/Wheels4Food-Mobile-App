@@ -1,7 +1,13 @@
 angular.module('starter.controllers')
 
-        .controller('AccountCtrl', function ($scope, $state, $http, $localstorage,$timeout, api, $ionicHistory, $ionicPopup, $ionicModal) {
+        .controller('AccountCtrl', function ($scope, $state, $http, $localstorage, $timeout, api, $ionicHistory, $ionicPopup, $ionicModal) {
             $scope.username = $localstorage.get('username');
+
+            $scope.password = {
+                oldPassword: '',
+                newPassword: '',
+                confirmNewPassword: ''
+            };
 
             console.log($scope.username);
 
@@ -22,7 +28,7 @@ angular.module('starter.controllers')
                     $ionicHistory.clearHistory();
                     $localstorage.clear();
                 }, 300);
-                
+
 
             }
 
@@ -68,25 +74,101 @@ angular.module('starter.controllers')
                 });
             }
 
-            $scope.cancel = function () {
-                $scope.user = angular.copy($scope.originalUser);
-                $scope.modal.hide();
+            $scope.changePassword = function () {
+                var confirmUpdatePopup = $ionicPopup.confirm({
+                    title: 'Confirm Change Password',
+                    template: 'Are you sure you want to change your password?'
+                });
+
+                confirmUpdatePopup.then(function (res) {
+                    if (res) {
+                        console.log('Yes Change Password');
+                        $http({
+                            url: api.endpoint + 'ChangePasswordRequest',
+                            method: 'PUT',
+                            data: {
+                                'username': $scope.username,
+                                'oldPassword': $scope.password.oldPassword,
+                                'newPassword': $scope.password.newPassword,
+                                'confirmNewPassword': $scope.password.confirmNewPassword
+                            },
+                            headers: {
+                                'Content-Type': 'application/json',
+                            }
+                        }).then(function (response) {
+                            console.log(response.data.isChanged);
+                            console.log($scope.oldPassword);
+                            if (response.data.isChanged) {
+                                
+                                //$scope.originalUser = angular.copy($scope.user);
+                                $scope.modal2.hide();
+                            } else {
+                                $scope.errorList = response.data.errorList;
+
+                                var updateFailPopup = $ionicPopup.alert({
+                                    title: 'Change Password Failed',
+                                    template: '<div ng-repeat="error in errorList"><font style="color: red;text-align:left">{{$index + 1}}. {{error}}</font></div>',
+                                    scope: $scope
+                                });
+
+//                        ngDialog.openConfirm({
+//                            template: '/Wheels4Food/resources/ngTemplates/updateProfileError.html',
+//                            className: 'ngdialog-theme-default dialog-generic',
+//                            scope: $scope
+//                        });
+                            }
+                        });
+                    } else {
+                        console.log('You are not sure');
+                    }
+                });
             }
+
+
+            $scope.cancel = function (index) {
+                $scope.user = angular.copy($scope.originalUser);
+                if (index == 1) {
+                    $scope.modal1.hide();
+                } else
+                    $scope.modal2.hide();
+                //$scope.modal2.hide();
+            }
+
             $ionicModal.fromTemplateUrl('templates/editModal.html', {
+                id: '1',
                 scope: $scope,
                 animation: 'slide-in-up'
             }).then(function (modal) {
-                $scope.modal = modal;
+                $scope.modal1 = modal;
             });
-            $scope.openModal = function () {
-                $scope.modal.show();
+
+            $ionicModal.fromTemplateUrl('templates/changePasswordModal.html', {
+                id: '2',
+                scope: $scope,
+                animation: 'slide-in-up'
+            }).then(function (modal) {
+                $scope.modal2 = modal;
+            });
+
+
+            $scope.openModal = function (index) {
+                if (index === 1) {
+                    $scope.modal1.show();
+                } else {
+                    $scope.modal2.show();
+                }
             };
+
             $scope.closeModal = function () {
-                $scope.modal.hide();
+                if (index == 1) {
+                    $scope.modal1.hide();
+                } else
+                    $scope.modal2.hide();
             };
             //Cleanup the modal when we're done with it!
             $scope.$on('$destroy', function () {
-                $scope.modal.remove();
+                $scope.modal1.remove();
+                $scope.modal2.remove();
             });
             // Execute action on hide modal
             $scope.$on('modal.hidden', function () {

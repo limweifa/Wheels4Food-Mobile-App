@@ -145,6 +145,11 @@ angular.module('starter.controllers')
             });
             
             $scope.myJobStatus = "Accepted";
+            
+            
+            $scope.goToMapRouting = function () {
+                $state.go('maprouting');
+            };
 
         })
         ;
