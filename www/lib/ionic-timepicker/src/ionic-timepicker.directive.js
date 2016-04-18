@@ -9,6 +9,12 @@
 
   ionicTimepicker.$inject = ['$ionicPopup'];
   function ionicTimepicker($ionicPopup) {
+      console.log("HELLO");
+      console.log("HELLO");
+      console.log("HELLO");
+      console.log("HELLO");
+      console.log("HELLO");
+      
     return {
       restrict: 'AE',
       replace: true,
@@ -40,6 +46,7 @@
           if (obj.format == 12) {
             if (scope.time.hours != 12) {
               scope.time.hours += 1;
+              console.log("TESTING WAD IS DIZ" + scope.time.hours);
             } else {
               scope.time.hours = 1;
             }

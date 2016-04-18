@@ -2,7 +2,8 @@
 angular.module('starter.controllers')
 
         .controller('RegisterCtrl', function ($scope, $state, $http, api, $ionicPopup) {
-            $scope.registration = {
+             console.log($state);
+                    $scope.registration = {
                 'username': '',
                 'password': '',
                 'confirmPassword': '',

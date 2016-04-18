@@ -1,4 +1,7 @@
+<!--     <ion-slide-box>
+           <ion-slide> page1-->
 <ion-view view-title="Jobs" class="jobs">
+    
     <ion-content overflow-scroll="true">
         
         <ion-refresher
@@ -14,7 +17,7 @@
             Map Routing
         </button>-->
         <div class="list" >
-            <div ng-repeat="job in jobList" class="item item-text-wrap" >
+            <div ng-repeat="job in jobList" class="item item-text-wrap reduceitempadding" >
 <!--                <div class="item item-divider reducepaddingnone">
                     <strong>Items</strong>
                 </div>
@@ -37,7 +40,6 @@
                     <span class="input-label reduceinputlabel"><i class="ion-ios-location"></i> Delivery</span>
                     {{job.demand.user.address}}
                 </label>
-                <br>
 <!--                <div class="row">
                     <div class="col col-40 col-offset-20">
                         <button class="button button-small button-block button-calm icon-right"><strong>View Directions  <i class="ion-android-map"></i></strong></button>
@@ -53,3 +55,5 @@
         </div>
     </ion-content>
 </ion-view>
+<!--                                         </ion-slide>
+</ion-slide-box>-->

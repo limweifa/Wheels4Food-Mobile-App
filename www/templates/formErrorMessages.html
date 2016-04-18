@@ -2,3 +2,7 @@
 <div class="form-error" ng-message="email">Please enter a valid email.</div>
 <div class="form-error" ng-message="minlength">This field is must be at least 5 characters.</div>
 <div class="form-error" ng-message="maxlength">This field is must be less than 50 characters</div>
+<div  ng-message="validatePickupTime"><i class="icon ion-information-circled"></i> Please select a pickup timing between {{currentJob.timeslot}}</div>
+<div  ng-message="validateDeliveryTime"><i class="icon ion-information-circled"></i> Please select a delivery timing between {{currentJob.timeslot}}</div>
+<!--<div class="form-error" ng-message="validatePickupBeforeDeliveryTime"><i class="icon ion-information-circled"></i> Pickup time should be before delivery time</div>
+<div class="form-error" ng-message="validateDeliveryAfterPickupTime"><i class="icon ion-information-circled"></i> Delivery time should be after pickup time</div>-->

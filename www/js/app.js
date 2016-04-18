@@ -23,7 +23,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
             });
         })
 
-
         .factory('$localstorage', ['$window', function ($window) {
                 return {
                     set: function (key, value) {
@@ -129,6 +128,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
                         }
                     })
                     
+                    .state('tab.notifcation', {
+                        cache: false,
+                        url: '/notification',
+                        views: {
+                            'myjobs': {
+                                templateUrl: 'templates/notification.html',
+                                controller: 'NotificationCtrl'
+                            }
+                        }
+                    })
+                    
                     .state('maps', {
                         cache: false,
                         url: '/maps',
@@ -147,6 +157,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
             $urlRouterProvider.otherwise('/login');
 
         })
+        
+        
 
         .provider('api', [
             function () {
@@ -169,7 +181,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
                 };
             }
         ])
-
+       
         .config(['apiProvider',
             function (apiProvider) {
                 //http://localhost:8100 for ionic serve testing

@@ -1,7 +1,8 @@
 angular.module('starter.controllers')
 
         .controller('MyJobsCtrl', function ($scope, $state, $stateParams, $http, $filter, $localstorage, api, $ionicPopup, $ionicModal) {
-            console.log("MyJobsCtrl");
+             console.log($state);
+                    console.log("MyJobsCtrl");
             $scope.username = $localstorage.get('username');
             $scope.userID = $localstorage.get('userID');
             
@@ -144,7 +145,13 @@ angular.module('starter.controllers')
                 // Execute action
             });
             
-            $scope.myJobStatus = "Accepted";
+            if($scope.notificationTab === "complete"){
+                $scope.myJobStatus = "Completed";
+            } else if($scope.notificationTab === "cancel"){
+                $scope.myJobStatus = "Cancelled";
+            } else {
+                $scope.myJobStatus = "Accepted";
+             }
             
             
             $scope.goToMapRouting = function () {

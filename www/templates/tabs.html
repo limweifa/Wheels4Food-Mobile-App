@@ -10,7 +10,6 @@ navigation history that also transitions its views in and out.
     <ion-nav-view name="jobs"></ion-nav-view>
   </ion-tab>
 
-
     <ion-tab title="My Jobs" icon-off="ion-briefcase" icon-on="ion-briefcase" href="#/tab/myjobs">
     <ion-nav-view name="myjobs"></ion-nav-view>
   </ion-tab>
@@ -18,6 +17,10 @@ navigation history that also transitions its views in and out.
   <!-- Account Tab --> 
   <ion-tab title="Profile" icon-off="ion-android-person" icon-on="ion-android-person" href="#/tab/account">
     <ion-nav-view name="account"></ion-nav-view>
+  </ion-tab>
+  
+  <ion-tab title="Notification" icon-off="ion-ios-bell" href="#/tab/notification" icon-on="ion-ios-bell" ng-click="openPopover($event)" badge="$parent.badgeCount" badge-style="badge-assertive">
+    <ion-nav-view name="notification"></ion-nav-view>
   </ion-tab>
 <!--  
   <ion-tab title="Sign-Out" icon="ion-log-out" href="#/login">

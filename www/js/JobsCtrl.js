@@ -1,13 +1,18 @@
 angular.module('starter.controllers')
 
         .controller('JobsCtrl', function ($scope, $state, $stateParams, $http, $filter, $localstorage, api, $ionicPopup, $ionicModal) {
-            console.log("JobsCtrl");
+            console.log($state);
+            // console.log("JobsCtrl");
             $scope.username = $localstorage.get('username');
             $scope.userID = $localstorage.get('userID');
             $scope.organizationName = $localstorage.get('organizationName');
-            
+
+            $scope.isValidPickupTime = true;
+            $scope.isValidDeliveryTime = true;
+            $scope.pickupBeforeDelivery = true;
+
             console.log("ORGANIZATION NAME IS: " + $scope.organizationName);
-            
+
             $scope.doRefresh = function () {
                 $http({
                     //url: api.endpoint + 'GetJobListByUserIdRequest/' + $scope.userID,
@@ -29,7 +34,7 @@ angular.module('starter.controllers')
                     $scope.$broadcast('scroll.refreshComplete');
                 });
             };
-            
+
             $http({
                 //url: api.endpoint + 'GetJobListRequest',
                 url: api.endpoint + 'GetJobListByOrganizationNameRequest/' + $scope.organizationName,
@@ -52,7 +57,6 @@ angular.module('starter.controllers')
             });
 
             $scope.view = function (job) {
-
                 $http({
                     url: api.endpoint + 'GetDemandItemListByDemandIdRequest/' + job.demand.id,
                     method: 'GET'
@@ -68,103 +72,78 @@ angular.module('starter.controllers')
                     }
                 }).then(function (response) {
                     $scope.currentJob = response.data;
-//                    console.log("CURRENT JOB");
-                    console.log(response.data);
-//                    console.log("**************");
-//
-//                    $scope.scheduleAMList = [];
-//                    $scope.schedulePMList = [];
-//                    $scope.disabledAMList = [];
-//                    $scope.disabledPMList = [];
-//                    $scope.scheduleCount = 0;
-//
-//                    for (var i = 0; i < $scope.currentJob.schedule.length; i++) {
-//                        var value = $scope.currentJob.schedule.charAt(i);
-//
-//                        if (i % 2 === 0) {
-//                            if (value === '0') {
-//                                $scope.scheduleAMList.push({'value': false});
-//                                $scope.disabledAMList.push(i / 2);
-//                            } else {
-//                                $scope.scheduleAMList.push({'value': true});
-//                                $scope.scheduleCount++;
-//                            }
-//                        } else {
-//                            if (value === '0') {
-//                                $scope.schedulePMList.push({'value': false});
-//                                $scope.disabledPMList.push(Math.floor(i / 2));
-//                            } else {
-//                                $scope.schedulePMList.push({'value': true});
-//                                $scope.scheduleCount++;
-//                            }
-//                        }
-//                    }
-//
-//                    var parts = $scope.currentJob.expiryDate.split("/");
-//                    var expiryDate = new Date(parseInt(parts[2], 10),
-//                            parseInt(parts[1], 10) - 1,
-//                            parseInt(parts[0], 10));
-//
-//                    $scope.dates = [];
-//
-//                    for (var i = 0; i < 10; i++) {
-//                        if (expiryDate.getDay() !== 0 && expiryDate.getDay() !== 6) {
-//                            $scope.dates.unshift({'value': new Date(expiryDate)});
-//                        } else {
-//                            i--;
-//                        }
-//
-//                        expiryDate.setDate(expiryDate.getDate() - 1);
-//                    }
-//
-//                    //Filter data to display on viewJobDetails.html
-//                    $scope.availableSlots = [];
-//
-//                    for (var i = 0; i < $scope.dates.length; i++) {
-//                        console.log($scope.dates[i]);
-//
-//                        if ($scope.scheduleAMList[i].value || $scope.schedulePMList[i].value) {
-//                            $scope.availableSlots.push({
-//                                'amSlot': {isAvailable: $scope.scheduleAMList[i].value, date: $scope.dates[i].value, period: "9am to 12pm"},
-//                                'pmSlot': {isAvailable: $scope.schedulePMList[i].value, date: $scope.dates[i].value, period: "2pm to 5pm"}
-//                            });
-//
-//                        }
-//                    }
-//
-//                    //Accept Job
-//                    $scope.selectedSlot = {};
-//
-//                    $scope.selectSlot = function (selectedSlot) {
-//                        $scope.deliveryDate = $filter('date')(selectedSlot.date, 'dd/MM/yyyy');
-//                        $scope.hasSelection = true;
-//                    };
-               
-                $scope.deliveryDate = $scope.currentJob.deliveryDate;
 
-                $scope.timePickerPickupCallback = function (val) {
-                    if (typeof (val) === 'undefined') {
-                        console.log('Time not selected');
+                    if ($scope.currentJob.timeslot === '9AM-12PM') {
+                        $scope.inputEpochTime = 1460883600;
                     } else {
-                        var selectedTime = new Date(val * 1000 - 8 * 60 * 60 * 1000);
-                        console.log('Selected PICKUP epoch is : ', val, 'and the time is ', selectedTime.getUTCHours(), ':', selectedTime.getUTCMinutes(), 'in UTC');
-                        $scope.collectionTime = $filter('date')(selectedTime, 'HH:mm a');
-                        $scope.collectionTimeTwelveHours = $filter('date')(selectedTime, 'hh:mm a');
+                        $scope.inputEpochTime = 1460901600;
                     }
-                }
 
-                $scope.timePickerDeliverCallback = function (val) {
-                    if (typeof (val) === 'undefined') {
-                        console.log('Time not selected');
-                    } else {
-                        var selectedTime = new Date(val * 1000 - 8 * 60 * 60 * 1000);
-                        console.log('Selected DELIVERY epoch is : ', val, 'and the time is ', selectedTime.getUTCHours(), ':', selectedTime.getUTCMinutes(), 'in UTC');
-                        $scope.deliveryTime = $filter('date')(selectedTime, 'HH:mm a');
-                        $scope.deliveryTimeTwelveHours = $filter('date')(selectedTime, 'hh:mm a');
+                    $scope.timePickerObjectPickup = {
+                        //inputEpochTime: ((new Date()).getHours() * 60 * 60), //Optional
+                        inputEpochTime: $scope.inputEpochTime,
+                        step: 10, //Optional
+                        format: 12, //Optional
+                        titleLabel: 'Please indicate approximate pickup time between ' + $scope.currentJob.timeslot, //Optional
+                        setLabel: 'Set', //Optional
+                        closeLabel: 'Close', //Optional
+                        setButtonType: 'button-calm', //Optional
+                        closeButtonType: 'button-stable', //Optional
+                        callback: function (val) {    //Mandatory
+                            $scope.timePickerPickupCallback(val);
+                        }
+                    };
+
+                    $scope.timePickerObjectDeliver = {
+                        //inputEpochTime: ((new Date()).getHours() * 60 * 60), //Optional
+                        inputEpochTime: $scope.inputEpochTime,
+                        step: 10, //Optional
+                        format: 12, //Optional
+                        titleLabel: 'Please indicate approximate delivery time between ' + $scope.currentJob.timeslot, //Optional
+                        setLabel: 'Set', //Optional
+                        closeLabel: 'Close', //Optional
+                        setButtonType: 'button-calm', //Optional
+                        closeButtonType: 'button-stable', //Optional
+                        callback: function (val) {    //Mandatory
+                            $scope.timePickerDeliverCallback(val);
+                        }
+
+                    };
+
+                    $scope.deliveryDate = $scope.currentJob.deliveryDate;
+
+                    $scope.timePickerPickupCallback = function (val) {
+                        if (typeof (val) === 'undefined') {
+                            console.log('Time not selected');
+                        } else {
+                            var selectedTime = new Date(val * 1000 - 8 * 60 * 60 * 1000);
+                            //console.log('Selected PICKUP epoch is : ', val, 'and the time is ', selectedTime.getUTCHours(), ':', selectedTime.getUTCMinutes(), 'in UTC');
+                            $scope.collectionTime = $filter('date')(selectedTime, 'HH:mm a');
+                            $scope.collectionTimeTwelveHours = $filter('date')(selectedTime, 'hh:mm a');
+                            $scope.pickupHours = parseInt($filter('date')(selectedTime, 'hh'));
+                            $scope.pickupMinutes = parseInt($filter('date')(selectedTime, 'mm'));
+//                            $scope.pickupPeriod = parseInt($filter('date')(selectedTime, 'a'));
+                            console.log("PICKUPHOURS: " + $scope.pickupHours + " TYPE: " + typeof($scope.pickupHours));
+                            console.log($scope.pickupMinutes);
+                            console.log($scope.pickupPeriod);
+                        }
                     }
-                }
 
-                     });
+                    $scope.timePickerDeliverCallback = function (val) {
+                        if (typeof (val) === 'undefined') {
+                            console.log('Time not selected');
+                        } else {
+                            var selectedTime = new Date(val * 1000 - 8 * 60 * 60 * 1000);
+                            //console.log('Selected DELIVERY epoch is : ', val, 'and the time is ', selectedTime.getUTCHours(), ':', selectedTime.getUTCMinutes(), 'in UTC');
+                            $scope.deliveryTime = $filter('date')(selectedTime, 'HH:mm a');
+                            $scope.deliveryTimeTwelveHours = $filter('date')(selectedTime, 'hh:mm a');
+                            $scope.deliveryHours = parseInt($filter('date')(selectedTime, 'hh'));
+                            $scope.deliveryMinutes = parseInt($filter('date')(selectedTime, 'mm'));
+//                            $scope.deliveryPeriod = parseInt($filter('date')(selectedTime, 'a'));
+                        }
+                    }
+
+                });
                 $scope.modal.show();
             };
 
@@ -188,7 +167,7 @@ angular.module('starter.controllers')
                         $scope.modal.hide();
 //                        $state.go('tab.myjobs');
 //                        $state.go($state.current, $stateParams, {reload: true, inherit: false});
-//                        $state.go('tab.myjobs');
+                        $state.go('tab.myjobs');
 //                        $scope.modal.hide();
                         $scope.showAlert = function () {
                             var alertAcceptJobSuccessPopup = $ionicPopup.alert({
@@ -204,21 +183,23 @@ angular.module('starter.controllers')
 
                     }
                     $scope.showAlert = function () {
-                            var alertAcceptJobSuccessPopup = $ionicPopup.alert({
-                                title: 'Job Successfully Accepted',
-                                template: 'Thank you for helping out!'
-                            });
+                        var alertAcceptJobSuccessPopup = $ionicPopup.alert({
+                            title: 'Job Successfully Accepted',
+                            template: 'Thank you for helping out!'
+                        });
 
-                            alertAcceptJobSuccessPopup.then(function (res) {
-                                $state.go('myjobs');
-                                console.log('Thank you for helping out!');
-                            });
-                        };
+                        alertAcceptJobSuccessPopup.then(function (res) {
+                            $state.go('myjobs');
+                            console.log('Thank you for helping out!');
+                        });
+                    };
                 });
             };
 
+            //initialize timepicker first
             $scope.timePickerObjectPickup = {
-                inputEpochTime: ((new Date()).getHours() * 60 * 60), //Optional
+                //inputEpochTime: ((new Date()).getHours() * 60 * 60), //Optional
+                inputEpochTime: $scope.inputEpochTime,
                 step: 10, //Optional
                 format: 12, //Optional
                 titleLabel: 'Please indicate approximate pickup time', //Optional
@@ -232,7 +213,8 @@ angular.module('starter.controllers')
             };
 
             $scope.timePickerObjectDeliver = {
-                inputEpochTime: ((new Date()).getHours() * 60 * 60), //Optional
+                //inputEpochTime: ((new Date()).getHours() * 60 * 60), //Optional
+                inputEpochTime: $scope.inputEpochTime,
                 step: 10, //Optional
                 format: 12, //Optional
                 titleLabel: 'Please indicate approximate delivery time', //Optional
@@ -243,8 +225,8 @@ angular.module('starter.controllers')
                 callback: function (val) {    //Mandatory
                     $scope.timePickerDeliverCallback(val);
                 }
+
             };
-            console.log("hello");
 
             //View Job Details Modal
             $ionicModal.fromTemplateUrl('templates/viewJobDetails.html', {
@@ -265,6 +247,16 @@ angular.module('starter.controllers')
             });
             // Execute action on hide modal
             $scope.$on('modal.hidden', function () {
+                $scope.collectionTimeTwelveHours = "";
+                $scope.deliveryTimeTwelveHours = "";
+                $scope.pickupHours = undefined;
+                $scope.pickupMinutes = undefined;
+                $scope.deliveryHours = undefined;
+                $scope.deliveryMinutes = undefined;
+                $scope.isValidPickupTime = true;
+                $scope.isValidDeliveryTime = true;
+                $scope.pickupBeforeDelivery = true;
+                $scope.firstVisit = true;
                 // Execute action
             });
             // Execute action on remove modal
@@ -275,10 +267,179 @@ angular.module('starter.controllers')
             $scope.goToMap = function () {
                 $state.go('maps');
             };
-            
+
             $scope.goToMapRouting = function () {
                 $state.go('maprouting');
             };
+            
+            $scope.validatePickupBeforeDeliveryTime = function(){
+                $scope.pickupBeforeDelivery = true;
+                if($scope.pickupHours !== undefined && $scope.pickupMinutes !== undefined) {
+console.log("VALIDATING...");
+                if($scope.pickupHours > $scope.deliveryHours || ($scope.pickupHours === $scope.deliveryHours && $scope.pickupMinutes >= $scope.deliveryMinutes)){    
+                    $scope.pickupBeforeDelivery = false;
+                } 
+                 }
+            }
 
         })
-        ;
+
+        .directive('validatePickupTime', function () {
+            return {
+                restrict: 'A',
+                require: 'ngModel',
+//                    controller: 'JobsCtrl',
+                link: function ($scope, $element, $attrs, ngModel) {
+                    ngModel.$validators.validatePickupTime = function (modelValue) {
+                        $scope.isValidPickupTime = true;
+                        //true or false based on custom dir validation
+
+                        if (typeof (modelValue) !== 'undefined' && $scope.collectionTimeTwelveHours !== "") { 
+                            var hours = parseInt(modelValue.substring(0, 2));
+                            var minutes = parseInt(modelValue.substring(3, 5));
+                            var period = modelValue.substring(6, 8);
+                            console.log("Hours: " + hours);
+                            console.log("Minutes: " + minutes);
+                            console.log("Period: " + period);
+                            if ($scope.currentJob.timeslot === "9AM-12PM") {
+                                if (hours === 12 && minutes === 0 && period === "PM") {
+                                    $scope.validatePickupBeforeDeliveryTime();
+                                    return true;
+                                } else if (period === "PM" || hours < 9 || hours > 12 || (hours === 12 && minutes > 0) || (hours === 12 && period === "AM")) {
+                                    $scope.isValidPickupTime = false;
+//                                    $scope.pickupBeforeDelivery = true;
+                                    return false;
+                                } else {
+                                    $scope.validatePickupBeforeDeliveryTime();
+                                    return true;
+                                }
+                            } else {
+                                if (period === "AM" || hours < 2 || hours > 5 || (hours === 5 && minutes > 0)) {
+                                    $scope.isValidPickupTime = false;
+//                                    $scope.pickupBeforeDelivery = true;
+                                    return false;
+                                } else {
+                                    $scope.validatePickupBeforeDeliveryTime();
+                                    return true;
+                                }
+                            }
+                        } else {
+                            return false;
+                        }
+                    };
+                }
+            };
+        })
+
+        .directive('validateDeliveryTime', function () {
+            return {
+                restrict: 'A',
+                require: 'ngModel',
+                link: function ($scope, $element, $attrs, ngModel) {
+                    ngModel.$validators.validateDeliveryTime = function (modelValue) {
+                        $scope.isValidDeliveryTime = true;
+                        //true or false based on custom dir validation
+                        if (typeof (modelValue) !== 'undefined' && $scope.collectionTimeTwelveHours !== "") {
+                            var hours = parseInt(modelValue.substring(0, 2));
+                            var minutes = parseInt(modelValue.substring(3, 5));
+                            var period = modelValue.substring(6, 8);
+                            console.log("Hours: " + hours);
+                            console.log("Minutes: " + minutes);
+                            console.log("Period: " + period);
+                            if ($scope.currentJob.timeslot === "9AM-12PM") {
+                                if (hours === 12 && minutes === 0 && period === "PM") {
+                                    $scope.validatePickupBeforeDeliveryTime();
+                                    return true;
+                                } else if (period === "PM" || hours < 9 || hours > 12 || (hours === 12 && minutes > 0) || (hours === 12 && period === "AM")) {
+                                    $scope.isValidDeliveryTime = false;
+//                                    $scope.deliveryAfterPickup = true;
+                                    return false;
+
+                                } else {
+                                    $scope.validatePickupBeforeDeliveryTime();
+                                    return true;
+                                }
+                            } else {
+                                if (period === "AM" || hours < 2 || hours > 5 || (hours === 5 && minutes > 0)) {
+                                    $scope.isValidDeliveryTime = false;
+//                                    $scope.deliveryAfterPickup = true;
+                                    return false;
+                                } else {
+                                    $scope.validatePickupBeforeDeliveryTime();
+                                    return true;
+                                }
+                            }
+                        } else {
+                            return false;
+                        }
+                    };
+                }
+            };
+        });
+        
+//        .directive('validatePickupBeforeDeliveryTime', function () {
+//            return {
+//                restrict: 'A',
+//                require: 'ngModel',
+//                link: function ($scope, $element, $attrs, ngModel) {
+//                    ngModel.$validators.validatePickupBeforeDeliveryTime = function (modelValue) {
+//                        if($scope.isValidPickupTime && $scope.isValidDeliveryTime){
+//                        $scope.pickupBeforeDelivery = true;
+//                        console.log("PICKUP BEFORE DELIVERY??");
+//                        //true or false based on custom dir validation
+//                        if (typeof (modelValue) !== 'undefined') {
+//                            var hours = parseInt(modelValue.substring(0, 2));
+//                            var minutes = parseInt(modelValue.substring(3, 5));
+//                            var period = modelValue.substring(6, 8);
+//                            if($scope.deliveryHours < hours || ($scope.deliveryHours === hours && $scope.deliveryMinutes <= minutes)){    
+//                                $scope.pickupBeforeDelivery = false;
+//                                $scope.deliveryAfterPickup = true;
+//                                console.log("FALSE LEH");
+//                                return false;
+//                            } else {
+//                                $scope.deliveryAfterPickup = true;
+//                                
+//                                console.log("TRUE LEH");
+//                                return true;
+//                            }
+//                        } else {
+//                            return false;
+//                        }
+//                    }
+//                    };
+//                }
+//            };
+//        })
+//        
+//        .directive('validateDeliveryAfterPickupTime', function () {
+//            return {
+//                restrict: 'A',
+//                require: 'ngModel',
+//                link: function ($scope, $element, $attrs, ngModel) {
+//                    ngModel.$validators.validateDeliveryAfterPickupTime = function (modelValue) {
+//                        if($scope.isValidDeliveryTime){
+//                        $scope.deliveryAfterPickup = true;
+//                        console.log("Inside validate pickup and delivery time");
+//                        //true or false based on custom dir validation
+//                        if (typeof (modelValue) !== 'undefined') {
+//                            var hours = parseInt(modelValue.substring(0, 2));
+//                            var minutes = parseInt(modelValue.substring(3, 5));
+//                            var period = modelValue.substring(6, 8);
+//                            if($scope.pickupHours > hours || ($scope.pickupHours === hours && $scope.pickupMinutes >= minutes)){    
+//                                $scope.deliveryAfterPickup = false;
+//                                $scope.pickupBeforeDelivery = true;
+//                                console.log("FALSE LEH");
+//                                return false;
+//                            } else {
+//                                $scope.pickupBeforeDelivery = true;
+//                                console.log("TRUE LEH");
+//                                return true;
+//                            }
+//                        } else {
+//                            return false;
+//                        }
+//                    }
+//                    };
+//                }
+//            };
+//        });

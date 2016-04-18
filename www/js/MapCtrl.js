@@ -1,7 +1,8 @@
 angular.module('starter.controllers')
 
         .controller('MapCtrl', function ($scope, $state, $stateParams, $ionicPlatform, $ionicLoading, $ionicHistory, $cordovaGeolocation, $ionicLoading, $http, $filter, $localstorage, api, $ionicPopup, $ionicModal) {
-            $scope.username = $localstorage.get('username');
+             console.log($state);
+                    $scope.username = $localstorage.get('username');
             $scope.userID = $localstorage.get('userID');
             var markersArray = [];
             $ionicPlatform.ready(function () {

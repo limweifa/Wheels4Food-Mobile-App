@@ -1,4 +1,6 @@
-<ion-view view-title="My Jobs" class="jobs">
+<!-- <ion-slide-box>
+           <ion-slide>-->
+               <ion-view view-title="My Jobs" class="jobs">
     <ion-content overflow-scroll="true">
         
         <ion-refresher
@@ -7,9 +9,9 @@
         </ion-refresher>
         
         <div class="button-bar button-block">
-            <a class="button button-energized" ng-model="myJobStatus" ng-click="myJobStatus = 'Accepted'"><strong>In Progress</strong></a>
-            <a class="button button-balanced" ng-model="myJobStatus" ng-click="myJobStatus = 'Completed'"><strong>Completed</strong></a>
-            <a class="button button-assertive" ng-model="myJobStatus" ng-click="myJobStatus = 'Cancelled'"><strong>Cancelled</strong></a>
+            <a class="button button-energized" ng-model="myJobStatus" ng-click="myJobStatus = 'Accepted'" style="font-size:14px"><strong>In Progress</strong></a>
+            <a class="button button-balanced" ng-model="myJobStatus" ng-click="myJobStatus = 'Completed'" style="font-size:14px"><strong>Completed</strong></a>
+            <a class="button button-assertive" ng-model="myJobStatus" ng-click="myJobStatus = 'Cancelled'" style="font-size:14px"><strong>Cancelled</strong></a>
         </div>
         <div class="item item-divider myjobstatustitle">
             <strong>My {{myJobStatus}} Jobs</strong>
@@ -17,7 +19,7 @@
         
         <div class="list">
             <div ng-show="myJobStatus === 'Accepted'">
-            <div class="item item-text-wrap" ng-repeat="job in jobList" ng-show="job.status === 'Accepted'" >
+            <div class="item item-text-wrap reduceitempadding" ng-repeat="job in jobList" ng-show="job.status === 'Accepted'" >
                 <div class="item item-divider reducepaddingnone">
                     <strong>Delivery Details</strong>
                 </div>
@@ -155,4 +157,6 @@
             </div>
         </div>
     </ion-content>
-</ion-view>
+               </ion-view>
+<!--           </ion-slide>
+           </ion-slide-box>-->

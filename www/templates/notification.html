@@ -1,0 +1,13 @@
+<ion-popover-view>
+    <ion-header-bar>
+      <h1 class="title">Notifications</h1>
+    </ion-header-bar>
+    <ion-content>
+ <ul class="list">
+    <li ng-repeat='notification in notificationList' class="item item-text-wrap" ng-click='goToState(notification)' ng-bind-html="notification.message">
+        <!--<b>RVWO2</b> has <b>completed</b> a job. Click here to go to <b>My Jobs</b>.-->
+    </li>
+    
+</ul>
+    </ion-content>
+</ion-popover-view>

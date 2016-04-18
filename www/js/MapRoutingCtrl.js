@@ -1,7 +1,8 @@
 angular.module('starter.controllers')
 
         .controller('MapRoutingCtrl', function ($scope, $state, $stateParams, $location, $anchorScroll, $ionicScrollDelegate, $ionicPlatform, $ionicLoading, $ionicHistory, $cordovaGeolocation, $ionicLoading, $http, $filter, $localstorage, api, $ionicPopup, $ionicModal) {
-            $scope.username = $localstorage.get('username');
+            console.log($state);
+                    $scope.username = $localstorage.get('username');
             $scope.userID = $localstorage.get('userID');
             $scope.myLatLng = "";
             $scope.showDirections = false;

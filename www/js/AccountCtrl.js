@@ -29,7 +29,6 @@ angular.module('starter.controllers')
                     $localstorage.clear();
                 }, 300);
 
-
             }
 
             $scope.updateProfile = function () {
