@@ -167,34 +167,36 @@ angular.module('starter.controllers')
                         $scope.modal.hide();
 //                        $state.go('tab.myjobs');
 //                        $state.go($state.current, $stateParams, {reload: true, inherit: false});
-                        $state.go('tab.myjobs');
+                        $state.go('tab.myjobs');             
 //                        $scope.modal.hide();
-                        $scope.showAlert = function () {
-                            var alertAcceptJobSuccessPopup = $ionicPopup.alert({
-                                title: 'Job Successfully Accepted',
-                                template: 'Thank you for helping out!'
-                            });
-
-                            alertAcceptJobSuccessPopup.then(function (res) {
-                                $state.go('tab.myjobs');
-                                console.log('Thank you for helping out!');
-                            });
-                        };
+                        $scope.showAlert();
 
                     }
                     $scope.showAlert = function () {
                         var alertAcceptJobSuccessPopup = $ionicPopup.alert({
                             title: 'Job Successfully Accepted',
-                            template: 'Thank you for helping out!'
+                            template: 'Thank you for accepting the job!',
+                            okType: 'button-calm'
                         });
 
                         alertAcceptJobSuccessPopup.then(function (res) {
-                            $state.go('myjobs');
                             console.log('Thank you for helping out!');
                         });
                     };
                 });
             };
+            
+            $scope.showAlert = function () {
+                            var alertAcceptJobSuccessPopup = $ionicPopup.alert({
+                                title: 'Job Successfully Accepted',
+                                template: 'Thank you for accepting the job!',
+                                okType: 'button-calm'
+                            });
+
+                            alertAcceptJobSuccessPopup.then(function (res) {
+                                console.log('Thank you for helping out!');
+                            });
+                        };
 
             //initialize timepicker first
             $scope.timePickerObjectPickup = {

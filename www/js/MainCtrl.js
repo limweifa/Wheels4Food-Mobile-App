@@ -6,6 +6,7 @@ angular.module('starter.controllers')
             $scope.userID = "";
             console.log("hello");
             
+
             $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
                 $scope.currentState = toState.name;
                 console.log(fromState);
@@ -20,20 +21,20 @@ angular.module('starter.controllers')
                     }).then(function (response) {
                         console.log("YELLOW MELLOW YELLOW MELLOW YEEEEELLLLLLLOOOOOOOWWWWW MEEEEEELLLLLOOOWWWW");
                         console.log(response);
-                        
+
                         $scope.notificationList = response.data.reverse();
-                    console.log("THIS IS THE NOTIFICATION LIST!!!!!!!");    
-                    console.log($scope.notificationList);
+                        console.log("THIS IS THE NOTIFICATION LIST!!!!!!!");
+                        console.log($scope.notificationList);
 //                    $scope.message = $scope.notificationList.[0].message;
-                        
+
                         $scope.badgeCount = response.data.length;
-                        
+
                     });
 
                 }
             });
-            
-                        // .fromTemplate() method
+
+            // .fromTemplate() method
             var template = '<ion-popover-view><ion-header-bar> <h1 class="title">Notifications</h1> </ion-header-bar> <ion-content> Hello! </ion-content></ion-popover-view>';
 
             $scope.popover = $ionicPopover.fromTemplate(template, {
@@ -65,15 +66,33 @@ angular.module('starter.controllers')
             $scope.$on('popover.removed', function () {
                 // Execute action
             });
-            
-            $scope.goToState = function(notification) {
-                if(notification.message.indexOf("complete") > -1){
+
+            $scope.goToState = function (notification) {
+                if (notification.message.indexOf("complete") > -1) {
                     $scope.notificationTab = "complete";
                 } else {
                     $scope.notificationTab = "cancel";
                 }
-                $state.go('tab.myjobs');
-                $scope.popover.hide();
+//                $state.go('tab.myjobs');
+//                $scope.popover.hide();
+
+                var index = $scope.notificationList.indexOf(notification);
+
+                $http({
+                    url: api.endpoint + 'DeleteNotificationRequest/' + notification.id,
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                }).then(function (response) {
+                    if (response.data.isDeleted) {
+                        $scope.notificationList.splice(index, 1);
+//                                $state.go(notification.state, $stateParams, {reload: true, inherit: false});
+                        $state.go('tab.myjobs');
+                        $scope.popover.hide();
+
+                    }
+                });
             };
 
         })

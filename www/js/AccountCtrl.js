@@ -22,19 +22,34 @@ angular.module('starter.controllers')
             });
 //            }
             $scope.logout = function () {
-                $state.go('login');
-                $timeout(function () {
-                    $ionicHistory.clearCache();
-                    $ionicHistory.clearHistory();
-                    $localstorage.clear();
-                }, 300);
+
+                var confirmLogoutPopup = $ionicPopup.confirm({
+                    title: 'Confirm Logout',
+                    template: 'Do you want to log out?',
+                    okType: 'button-calm'
+                });
+                confirmLogoutPopup.then(function (res) {
+                    if (res) {
+                        $state.go('login');
+                        $timeout(function () {
+                            $ionicHistory.clearCache();
+                            $ionicHistory.clearHistory();
+                            $localstorage.clear();
+                        }, 300);
+                        console.log('You are sure');
+                    } else {
+                        console.log('You are not sure');
+                    }
+                });
+
 
             }
 
             $scope.updateProfile = function () {
                 var confirmUpdatePopup = $ionicPopup.confirm({
                     title: 'Confirm Profile Update',
-                    template: 'Are you sure you want to update your profile?'
+                    template: 'Are you sure you want to update your profile?',
+                    okType: 'button-calm'
                 });
 
                 confirmUpdatePopup.then(function (res) {
@@ -50,14 +65,16 @@ angular.module('starter.controllers')
                         }).then(function (response) {
                             if (response.data.isUpdated) {
                                 $scope.originalUser = angular.copy($scope.user);
-                                $scope.modal.hide();
+                                $scope.modal1.hide();
+//                                $state.go('tab.account');
                             } else {
                                 $scope.errorList = response.data.errorList;
 
                                 var updateFailPopup = $ionicPopup.alert({
                                     title: 'Update Profile Failed',
                                     template: '<div ng-repeat="error in errorList"><font style="color: red">{{$index + 1}}. {{error}}</font></div>',
-                                    scope: $scope
+                                    scope: $scope,
+                                    okType: 'button-calm'
                                 });
 
 //                        ngDialog.openConfirm({
@@ -76,7 +93,8 @@ angular.module('starter.controllers')
             $scope.changePassword = function () {
                 var confirmUpdatePopup = $ionicPopup.confirm({
                     title: 'Confirm Change Password',
-                    template: 'Are you sure you want to change your password?'
+                    template: 'Are you sure you want to change your password?',
+                    okType: 'button-calm'
                 });
 
                 confirmUpdatePopup.then(function (res) {
@@ -98,16 +116,21 @@ angular.module('starter.controllers')
                             console.log(response.data.isChanged);
                             console.log($scope.oldPassword);
                             if (response.data.isChanged) {
-                                
+
                                 //$scope.originalUser = angular.copy($scope.user);
                                 $scope.modal2.hide();
+                                $scope.password.oldPassword = "";
+                                $scope.password.newPassword = "";
+                                $scope.password.confirmNewPassword = "";
+                                $scope.showAlert();
                             } else {
                                 $scope.errorList = response.data.errorList;
 
                                 var updateFailPopup = $ionicPopup.alert({
                                     title: 'Change Password Failed',
                                     template: '<div ng-repeat="error in errorList"><font style="color: red;text-align:left">{{$index + 1}}. {{error}}</font></div>',
-                                    scope: $scope
+                                    scope: $scope,
+                                    okType: 'button-calm'
                                 });
 
 //                        ngDialog.openConfirm({
@@ -122,6 +145,21 @@ angular.module('starter.controllers')
                     }
                 });
             }
+
+            $scope.showAlert = function () {
+                var changePasswordSuccessfulPopup = $ionicPopup.alert({
+                    title: 'Password Changed',
+                    template: 'Your password has been changed successfully.',
+                    okType: 'button-calm'
+
+                });
+
+                changePasswordSuccessfulPopup.then(function (res) {
+                    console.log("Successfully changed");
+//                                                $state.go($state.current, $stateParams, {reload: true, inherit: false});                                                
+
+                });
+            };
 
 
             $scope.cancel = function (index) {

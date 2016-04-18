@@ -17,6 +17,7 @@ angular.module('starter.controllers')
                 'description': '',
                 'role': 'Volunteer'
             };
+           
             
             $scope.loginFailed = false;
 
@@ -36,7 +37,8 @@ angular.module('starter.controllers')
             $scope.submit = function () {
                 var confirmPopup = $ionicPopup.confirm({
                     title: 'Confirm Registration Submission',
-                    template: '<div class="text-center">Are you sure you want to proceed?</div>'
+                    template: '<div class="text-center">Are you sure you want to proceed?</div>',
+                    okType: 'button-calm'
                 });
 
                 confirmPopup.then(function (res) {
@@ -55,7 +57,9 @@ angular.module('starter.controllers')
                                 var registerSuccessPopup = $ionicPopup.alert({
                                     title: 'Registration Successful',
                                     template: '<div class="text-center">Your registration has been submitted successfully</div>',
-                                    scope: $scope
+                                    scope: $scope,
+                                    okType: 'button-calm'
+                   
                                 });
 
                                 registerSuccessPopup.then(function(){
@@ -67,7 +71,9 @@ angular.module('starter.controllers')
                                 var registerFailPopup = $ionicPopup.alert({
                                     title: 'Registration Failed',
                                     template: '<div ng-repeat="error in errorList"><font style="color: red">{{$index + 1}}. {{error}}</font></div>',
-                                    scope: $scope
+                                    scope: $scope,
+                                    okType: 'button-calm'
+                             
                                 });
                             }
                         });

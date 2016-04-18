@@ -57,7 +57,8 @@
                                     
                                     var alertPopup = $ionicPopup.alert({
                                         title: 'Invalid Login',
-                                        template: 'Username or Password is incorrect'
+                                        template: 'Username or Password is incorrect',
+                                        okType: 'button-calm'
                                     });
                                 }
                             }, 800);

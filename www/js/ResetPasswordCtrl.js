@@ -27,7 +27,8 @@ angular.module('starter.controllers')
                         var resetPasswordSuccessPopup = $ionicPopup.alert({
                             title: 'Reset Password Successful',
                             template: '<div class="text-center">An email has been sent to {{data.email}} with the instructions to reset your password.</div>',
-                            scope: $scope
+                            scope: $scope,
+                            okType: 'button-calm'
                         });
 
                         resetPasswordSuccessPopup.then(function () {
@@ -41,7 +42,8 @@ angular.module('starter.controllers')
                         var resetPasswordFailPopup = $ionicPopup.alert({
                             title: 'Reset Password Failed',
                             template: '<div ng-repeat="error in errorList"><font style="color: red">{{$index + 1}}. {{error}}</font></div>',
-                            scope: $scope
+                            scope: $scope,
+                            okType: 'button-calm'
                         });
                     }
                 }, function (error) {

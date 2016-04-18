@@ -476,15 +476,23 @@ item item-text-wrap-login {
 
 .item-radio .radio-icon {
     position: absolute;
-    top: -5px;
+    top: 0px;
     right: 0px;
     z-index: 10;
     visibility: hidden;
-    padding: 10px;
-    height: 130%;
-    font-size: 15px;
-    background:#48CFAD;
+    /*padding: 10px;*/
+    padding-top:40px;
+    margin: 0px 0px 0px 0px;
+/*    padding-left:8px;
+    padding-right: 8px;*/
+    height: 100%;
+    font-size: 16px;
+    background:#4FC1E9;
     color: white;
+}
+
+div.radio-content{
+    
 }
 
 .png-icon{
@@ -582,7 +590,7 @@ p.jobdetails-supplier-myjobs {
     padding:0px 0px 0px 0px;
     border-width:0px;
     font-size:14px;
-    width:110px;  
+    width:115px;  
 }
 
 .jobs .reducebuttonpadding {
@@ -598,7 +606,7 @@ p.jobdetails-supplier-myjobs {
     padding-top:5px;*/
 }
 
-.reduceitempadding {
+.jobs .reduceitempadding {
 /*    border-color: #ddd;
     background-color: #fff;
     color: #444;
@@ -620,7 +628,7 @@ p.jobdetails-supplier-myjobs {
     
 }
 
-.view-job-details .card .item {
+.view-job-details .reducecarditem{
     padding-top: 7px;
     padding-bottom: 7px;
 }
@@ -638,6 +646,17 @@ p.jobdetails-supplier-myjobs {
     width: 0px;
     text-align: center;
     padding-right: 0px;
+}
+
+.view-job-details .reduceitempadding{
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+
+.myjobs .reducedeliverydetailspadding{
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
 
 .jobs .removebottommargin {
     margin-bottom:0px;
@@ -664,6 +683,21 @@ p.jobdetails-supplier-myjobs {
     color: rgba(0, 0, 0, 0.5);
 }
 
+.myjobs .reduceitempadding {
+/*    border-color: #ddd;
+    background-color: #fff;
+    color: #444;
+    position: relative;
+    z-index: 2;
+    display: block;
+    margin: -1px;
+    padding: 16px;
+    border-width: 1px;
+    border-style: solid;
+    font-size: 16px;*/
+    padding-top:10px;
+    padding-bottom:25px;
+}
 
 /*for my jobs but my jobs page class now is currently jobs*/
 .editwidth{
@@ -712,4 +746,22 @@ margin: 0px 0px 0px 0px !important;
       .blue:hover {
     color: white;
     box-shadow: 0px 5px 0px 0px #3BAFDA;
+}
+
+.notification {
+    text-align: center;
+}
+
+.button:after {
+/*    position: absolute;
+    top: -6px;
+    right: -6px;
+    bottom: -6px;
+    left: -6px;
+    content: ' ';*/
+    /*background-color: #4FC1E9;*/
+}
+
+.button-positive{
+    background-color: #4FC1E9;
 }

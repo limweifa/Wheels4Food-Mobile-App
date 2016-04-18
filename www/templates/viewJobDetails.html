@@ -19,7 +19,7 @@
         <div class="item item-input-inset">
             <label class="item-input-wrapper">
                 <span class="input-label ">Pickup&nbsp;&nbsp;</span> 
-                <input name="pickupTime" type="text" placeholder="Indicate pickup time" ng-model="collectionTimeTwelveHours" validate-pickup-time>
+                <input name="pickupTime" type="text" placeholder="Indicate pickup time" ng-model="collectionTimeTwelveHours" ng-disabled="true" validate-pickup-time>
             </label>
             <ionic-timepicker input-obj="timePickerObjectPickup" >
                 <button class="button button-small btn blue">
@@ -32,7 +32,7 @@
         <div class="item item-input-inset">
             <label class="item-input-wrapper">
                 <span class="input-label ">Delivery</span>
-                <input name="deliveryTime" type="text" placeholder="Indicate delivery time" ng-model="deliveryTimeTwelveHours" validate-delivery-time>
+                <input name="deliveryTime" type="text" placeholder="Indicate delivery time" ng-model="deliveryTimeTwelveHours" ng-disabled="true" validate-delivery-time>
             </label>
             <ionic-timepicker input-obj="timePickerObjectDeliver" name="hello">
                 <button name="timebutton" class="button button-small btn blue">
@@ -50,7 +50,7 @@
             <div class="item item-divider">
                 Item Details
             </div>
-            <div class="item item-text-wrap item-icon-left" ng-repeat="demandItem in currentDemandItemList">
+            <div class="item item-text-wrap item-icon-left reducecarditem" ng-repeat="demandItem in currentDemandItemList">
                 <i class="icon ion-ios-box"></i>
                 <p>{{demandItem.supply.itemName}}</p>
                 <span class="badge badge-calm">{{demandItem.quantityDemanded}}</span>
@@ -58,19 +58,19 @@
             <div class="item item-divider">
                 Delivery Details
             </div>
-            <div class="item item-text-wrap item-icon-left">
+            <div class="item item-text-wrap item-icon-left reduceitempadding">
                 <i class="icon ion-calendar"></i>
                 <h3>Date & Time</h3>
                 <p>{{currentJob.deliveryDate}}</p>
                 <p>{{currentJob.timeslot}}</p>
             </div> 
-            <div class="item item-text-wrap item-icon-left">
+            <div class="item item-text-wrap item-icon-left reduceitempadding">
                 <i class="icon ion-ios-location"></i>
                 <h3>Supplying Organization</h3>
                 <p>{{currentJob.demand.supplier.organizationName}}</p>
                 <p>{{currentJob.demand.supplier.address}}</p>
             </div>
-            <div class="item item-text-wrap item-icon-left">
+            <div class="item item-text-wrap item-icon-left reduceitempadding">
                 <i class="icon ion-ios-location"></i>
                 <h3>Receiving Organization</h3>
                 <p>{{currentJob.demand.user.organizationName}}</p>

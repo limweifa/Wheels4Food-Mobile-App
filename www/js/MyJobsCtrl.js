@@ -1,31 +1,31 @@
 angular.module('starter.controllers')
 
         .controller('MyJobsCtrl', function ($scope, $state, $stateParams, $http, $filter, $localstorage, api, $ionicPopup, $ionicModal) {
-             console.log($state);
-                    console.log("MyJobsCtrl");
+            console.log($state);
+            console.log("MyJobsCtrl");
             $scope.username = $localstorage.get('username');
             $scope.userID = $localstorage.get('userID');
-            
-            $scope.doRefresh = function() {
+
+            $scope.doRefresh = function () {
                 $http({
-                url: api.endpoint + 'GetJobListByUserIdRequest/' + $scope.userID,
-                method: 'GET'
-            }).then(function (response) {
-                $scope.jobList = response.data;
-            });
-            
-             $http({
-                url: api.endpoint + 'GetDemandItemListRequest',
-                method: 'GET'
-            }).then(function (response) {
-                $scope.demandItemList = response.data;
-                console.log("GetDemandItemListRequest SUCCESS");
-                console.log($scope.demandItemList);
-            }).finally(function() {
-       // Stop the ion-refresher from spinning
-       $scope.$broadcast('scroll.refreshComplete');
-     });
-  };
+                    url: api.endpoint + 'GetJobListByUserIdRequest/' + $scope.userID,
+                    method: 'GET'
+                }).then(function (response) {
+                    $scope.jobList = response.data;
+                });
+
+                $http({
+                    url: api.endpoint + 'GetDemandItemListRequest',
+                    method: 'GET'
+                }).then(function (response) {
+                    $scope.demandItemList = response.data;
+                    console.log("GetDemandItemListRequest SUCCESS");
+                    console.log($scope.demandItemList);
+                }).finally(function () {
+                    // Stop the ion-refresher from spinning
+                    $scope.$broadcast('scroll.refreshComplete');
+                });
+            };
             //retriving all the jobs for the user
             $http({
                 url: api.endpoint + 'GetJobListByUserIdRequest/' + $scope.userID,
@@ -33,8 +33,8 @@ angular.module('starter.controllers')
             }).then(function (response) {
                 $scope.jobList = response.data;
             });
-            
-             $http({
+
+            $http({
                 url: api.endpoint + 'GetDemandItemListRequest',
                 method: 'GET'
             }).then(function (response) {
@@ -54,14 +54,14 @@ angular.module('starter.controllers')
                 }).then(function (response) {
                     $scope.currentJob = response.data;
                 });
-                
+
                 $http({
                     url: api.endpoint + 'GetDemandItemListByDemandIdRequest/' + job.demand.id,
                     method: 'GET'
                 }).then(function (response) {
                     $scope.currentDemandItemList = response.data;
                 });
-                
+
                 $scope.modal.show();
             };
 
@@ -79,7 +79,7 @@ angular.module('starter.controllers')
                         {text: 'Cancel'},
                         {
                             text: '<b>Confirm</b>',
-                            type: 'button-positive',
+                            type: 'button-calm',
                             onTap: function (e) {
                                 $http({
                                     url: api.endpoint + 'CancelJobByDemandIdRequest',
@@ -93,18 +93,11 @@ angular.module('starter.controllers')
                                     if (response.data.isCancelled) {
                                         console.log("Job Successfully Cancelled");
                                         $scope.modal.hide();
-          
-                                        $scope.showAlert = function () {
-                                            var cancelSuccessfulPopup = $ionicPopup.alert({
-                                                title: 'Job Cancelled',
-                                                template: 'Your job has been cancelled successfuly. We hope you can still help out in other jobs :)'
-                                            });
+                                        $scope.myJobStatus = "Cancelled";
 
-                                            cancelSuccessfulPopup.then(function (res) {
-                                                console.log("Successfully cancelled");
-//                                                $state.go($state.current, $stateParams, {reload: true, inherit: false});
-                                            });
-                                        };
+                                        $scope.showAlert();
+
+
                                     }
                                 });
 //                                if (!$scope.data.wifi) {
@@ -119,6 +112,21 @@ angular.module('starter.controllers')
                 });
             };
 
+            $scope.showAlert = function () {
+                var cancelSuccessfulPopup = $ionicPopup.alert({
+                    title: 'Job Cancelled',
+                    template: 'Your job has been cancelled successfully. We hope you can still help out in other jobs :)',
+                    okType: 'button-calm'
+                    
+                });
+
+                cancelSuccessfulPopup.then(function (res) {
+                    console.log("Successfully cancelled");
+//                                                $state.go($state.current, $stateParams, {reload: true, inherit: false});                                                
+
+                });
+            };
+            
             //View Job Details Modal
             $ionicModal.fromTemplateUrl('templates/viewMyJobDetails.html', {
                 scope: $scope,
@@ -144,16 +152,16 @@ angular.module('starter.controllers')
             $scope.$on('modal.removed', function () {
                 // Execute action
             });
-            
-            if($scope.notificationTab === "complete"){
+
+            if ($scope.notificationTab === "complete") {
                 $scope.myJobStatus = "Completed";
-            } else if($scope.notificationTab === "cancel"){
+            } else if ($scope.notificationTab === "cancel") {
                 $scope.myJobStatus = "Cancelled";
             } else {
                 $scope.myJobStatus = "Accepted";
-             }
-            
-            
+            }
+
+
             $scope.goToMapRouting = function () {
                 $state.go('maprouting');
             };
