@@ -165,6 +165,19 @@ angular.module('starter.controllers')
             $scope.goToMapRouting = function () {
                 $state.go('maprouting');
             };
+            
+            $scope.sortType = "deliveryDate";
+            $scope.sortReverse = true;
+            
+            $scope.sortBy = function(job){
+                console.log("JOB IZ: " + job);
+                if($scope.sortType === "deliveryDate"){
+                    var parts = job.deliveryDate.split('/');
+                    var date = new Date(parseInt(parts[2]), parseInt(parts[1]), parseInt(parts[0]));
+                    return date;
+                }
+                return job[$scope.sortType];
+            }
 
         })
         ;

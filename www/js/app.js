@@ -186,13 +186,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         .config(['apiProvider',
             function (apiProvider) {
                 //http://localhost:8100 for ionic serve testing
-                apiProvider.setAPIEndpoints('http://localhost:8100');
+                //apiProvider.setAPIEndpoints('http://localhost:8100');
                 //http://192.168.1.19:8100 for livereload testing
                 //apiProvider.setAPIEndpoints('http://192.168.1.19:8100');
                 //http://apps.greentransformationlab.com/Wheels4Food for emulator and native mobile testing (LIVE SERVER)
                 //apiProvider.setAPIEndpoints('http://apps.greentransformationlab.com/Wheels4Food');
                 //http://apps.greentransformationlab.com:8081/Wheels4Food for emulator and native mobile testing (TEST SERVER)
-                //apiProvider.setAPIEndpoints('http://greentransformationlab.com:8081/Wheels4Food');
+                apiProvider.setAPIEndpoints('http://greentransformationlab.com:8081/Wheels4Food');
             }
         ])
 

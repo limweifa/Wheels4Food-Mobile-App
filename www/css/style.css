@@ -590,7 +590,7 @@ p.jobdetails-supplier-myjobs {
     padding:0px 0px 0px 0px;
     border-width:0px;
     font-size:14px;
-    width:115px;  
+    width:120px;  
 }
 
 .jobs .reducebuttonpadding {
@@ -675,7 +675,7 @@ p.jobdetails-supplier-myjobs {
     padding:0px 0px 0px 0px;
     border-width:0px;
     font-size:14px;
-    width:115px;  
+    width:120px;  
     color: rgba(0, 0, 0, 0.5);
 }
 
@@ -701,7 +701,7 @@ p.jobdetails-supplier-myjobs {
 
 /*for my jobs but my jobs page class now is currently jobs*/
 .editwidth{
-    max-width:220px;
+    max-width:210px;
 }
 
 /*.timePickerArrows {
@@ -750,18 +750,18 @@ margin: 0px 0px 0px 0px !important;
 
 .notification {
     text-align: center;
+    font-size: 14px;
 }
 
-.button:after {
-/*    position: absolute;
-    top: -6px;
-    right: -6px;
-    bottom: -6px;
-    left: -6px;
-    content: ' ';*/
-    /*background-color: #4FC1E9;*/
+.myjobdetailsreduceinputlabel {
+    padding:0px 0px 0px 0px;
+    border-width:0px;
+    font-size:14px;
+    width:125px;  
+    color: rgba(0, 0, 0, 0.5);
 }
 
-.button-positive{
-    background-color: #4FC1E9;
+input[disabled], select[disabled], textarea[disabled], input[readonly]:not(.cloned-text-input), textarea[readonly]:not(.cloned-text-input), select[readonly] {
+     background-color: transparent; 
+    cursor: not-allowed;
 }

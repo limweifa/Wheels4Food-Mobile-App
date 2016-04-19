@@ -19,7 +19,7 @@
         <div class="item item-input-inset">
             <label class="item-input-wrapper">
                 <span class="input-label ">Pickup&nbsp;&nbsp;</span> 
-                <input name="pickupTime" type="text" placeholder="Indicate pickup time" ng-model="collectionTimeTwelveHours" ng-disabled="true" validate-pickup-time>
+                <input name="pickupTime" type="text" placeholder="Indicate pickup time" ng-model="collectionTimeTwelveHours" ng-readonly="true" validate-pickup-time>
             </label>
             <ionic-timepicker input-obj="timePickerObjectPickup" >
                 <button class="button button-small btn blue">
@@ -32,7 +32,7 @@
         <div class="item item-input-inset">
             <label class="item-input-wrapper">
                 <span class="input-label ">Delivery</span>
-                <input name="deliveryTime" type="text" placeholder="Indicate delivery time" ng-model="deliveryTimeTwelveHours" ng-disabled="true" validate-delivery-time>
+                <input name="deliveryTime" type="text" placeholder="Indicate delivery time" ng-model="deliveryTimeTwelveHours" ng-readonly="true" validate-delivery-time>
             </label>
             <ionic-timepicker input-obj="timePickerObjectDeliver" name="hello">
                 <button name="timebutton" class="button button-small btn blue">

@@ -2,7 +2,7 @@ angular.module('starter.controllers')
 
         .controller('AccountCtrl', function ($scope, $state, $http, $localstorage, $timeout, api, $ionicHistory, $ionicPopup, $ionicModal) {
             $scope.username = $localstorage.get('username');
-
+            
             $scope.password = {
                 oldPassword: '',
                 newPassword: '',
@@ -118,11 +118,11 @@ angular.module('starter.controllers')
                             if (response.data.isChanged) {
 
                                 //$scope.originalUser = angular.copy($scope.user);
-                                $scope.modal2.hide();
+                                $scope.modal2.hide();   
+                                $scope.showAlert();
                                 $scope.password.oldPassword = "";
                                 $scope.password.newPassword = "";
                                 $scope.password.confirmNewPassword = "";
-                                $scope.showAlert();
                             } else {
                                 $scope.errorList = response.data.errorList;
 
@@ -168,6 +168,9 @@ angular.module('starter.controllers')
                     $scope.modal1.hide();
                 } else
                     $scope.modal2.hide();
+                $scope.password.oldPassword = undefined;
+                $scope.password.newPassword = undefined;
+                $scope.password.confirmNewPassword = undefined;
                 //$scope.modal2.hide();
             }
 
@@ -193,6 +196,7 @@ angular.module('starter.controllers')
                     $scope.modal1.show();
                 } else {
                     $scope.modal2.show();
+                    
                 }
             };
 
@@ -215,5 +219,40 @@ angular.module('starter.controllers')
             $scope.$on('modal.removed', function () {
                 // Execute action
             });
+
         })
-        ;
+
+
+        .directive('matchConfirmToNewPassword', function () {
+            return {
+                restrict: 'A',
+                require: 'ngModel',
+                link: function ($scope, $element, $attrs, ngModel) {
+                    ngModel.$validators.matchConfirmToNewPassword = function (modelValue) {
+                        //true or false based on custom dir validation
+                        if ($scope.password.newPassword && $scope.password.newPassword !== modelValue) {
+                            return false;
+                        }
+
+                        return true;
+                    };
+                }
+            };
+        })
+        .directive('matchNewToConfirmPassword', function () {
+            return {
+                restrict: 'A',
+                require: 'ngModel',
+                link: function ($scope, $element, $attrs, ngModel) {
+                    ngModel.$validators.matchNewToConfirmPassword = function (modelValue) {
+                        //true or false based on custom dir validation
+                        if ($scope.password.confirmNewPassword && $scope.password.confirmNewPassword !== modelValue) {
+                            return false;
+                        }
+
+                        return true;
+                    };
+                }
+            };
+        });
+        

@@ -4,10 +4,11 @@
     </ion-header-bar>
     <ion-content>
         <ul class="list">
-            <li class="notification" ng-show='notificationList.length === 0'>You have no new notifications</li>
-            <li class="notification" ng-repeat='notification in notificationList' class="item item-text-wrap" ng-click='goToState(notification)' ng-bind-html="notification.message">
+            <li class="item item-text-wrap notification" ng-show='notificationList.length === 0'>You have no new notifications</li>
+            <li class="item item-text-wrap notification" ng-repeat='notification in notificationList'ng-click='goToState(notification)' ng-bind-html="notification.message">
                 <!--<b>RVWO2</b> has <b>completed</b> a job. Click here to go to <b>My Jobs</b>.-->
             </li>
+            <li></li>
 
         </ul>
     </ion-content>

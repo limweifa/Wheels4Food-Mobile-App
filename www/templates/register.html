@@ -1,105 +1,112 @@
 <ion-view view-title="Register" name="register-view">
     <ion-content overflow-scroll="false">
-            
-            <!-- Added -->
+        <form name="registerForm" novalidate="">
             <div class="list list-inset">
                 <label class="item item-input item-stacked-label">
-                      <center><img src="images/Wheels4Food.png" width="30%" height="30%"></center>
+                    <center><img src="images/Wheels4Food.png" width="30%" height="30%"></center>
                 </label>
-                
-                <label class="item item-input item-stacked-label">
+
+                <label class="item item-input item-stacked-label" ng-class="{'has-error' : registerForm.username.$touched && registerForm.username.$invalid}">
                     <span class="input-label">Username</span>
-                    <input type="text" placeholder="Username" ng-model="registration.username">
+                    <input name="username" type="text" placeholder="Username" ng-model="registration.username" required>
                 </label>
-                
-                <label class="item item-input item-stacked-label">
+                <div class="form-errors" ng-show="registerForm.username.$touched && registerForm.username.$invalid" ng-messages="registerForm.username.$error" ng-messages-include="templates/formErrorMessages.html"></div>
+
+                <label class="item item-input item-stacked-label" ng-class="{'has-error' : registerForm.password.$touched && registerForm.password.$invalid}">
                     <span class="input-label">Password</span>
-                    <input type="password" placeholder="Password" ng-model="registration.password">
+                    <input name="password" type="password" placeholder="Password" ng-model="registration.password" required>
                 </label>
-                
-                <label class="item item-input item-stacked-label">
+                <div class="form-errors" ng-show="registerForm.password.$touched && registerForm.password.$invalid" ng-messages="registerForm.password.$error" ng-messages-include="templates/formErrorMessages.html"></div>
+
+                <label class="item item-input item-stacked-label" ng-class="{'has-error' : registerForm.confirmPassword.$touched && registerForm.confirmPassword.$invalid}">
                     <span class="input-label">Confirm Password</span>
-                    <input type="password" placeholder="Confirm Password" ng-model="registration.confirmPassword">
+                    <input name="confirmPassword" type="password" placeholder="Confirm Password" ng-model="registration.confirmPassword" required password-match>
                 </label>
-                
+                <div class="form-errors" ng-show="registerForm.confirmPassword.$touched && registerForm.confirmPassword.$invalid" ng-messages="registerForm.confirmPassword.$error" ng-messages-include="templates/formErrorMessages.html"></div>
+
                 <label class="item item-input item-select item-text-wrap">
                     <div class="input-label" style="font-size:14px">
-                    Organization
+                        Organization
                     </div>
                     <select ng-model="registration.organizationName">
                         <option ng-repeat="VWO in VWOList">{{VWO.organizationName}}</option>
                     </select>
                 </label>
-                
-<!--                <label class="item item-input item-stacked-label">
-                    <span class="input-label">Organization Description</span>
-                    <div class="item-text-wrap">
-                        <textarea placeholder="Organization Description" ng-model="registration.description"></textarea>
-                    <ion-textarea></ion-textarea>
-                    </div>
-                </label>-->
-                
-                <label class="item item-input item-stacked-label">
+
+                <!--                <label class="item item-input item-stacked-label">
+                                    <span class="input-label">Organization Description</span>
+                                    <div class="item-text-wrap">
+                                        <textarea placeholder="Organization Description" ng-model="registration.description"></textarea>
+                                    <ion-textarea></ion-textarea>
+                                    </div>
+                                </label>-->
+
+                <label class="item item-input item-stacked-label" ng-class="{'has-error' : registerForm.email.$touched && registerForm.email.$invalid}">
                     <span class="input-label">Email</span>
-                    <input type="text" placeholder="Email" ng-model="registration.email">
+                    <input name="email" type="email" placeholder="Email" ng-model="registration.email" required>
                 </label>
-            
-                <label class="item item-input item-stacked-label">
+                <div class="form-errors" ng-show="registerForm.email.$touched && registerForm.email.$invalid" ng-messages="registerForm.email.$error" ng-messages-include="templates/formErrorMessages.html"></div>
+
+                <label class="item item-input item-stacked-label" ng-class="{'has-error' : registerForm.fullName.$touched && registerForm.fullName.$invalid}">
                     <span class="input-label">Full Name</span>
-                    <input type="text" placeholder="Full Name" ng-model="registration.pocName">
+                    <input name="fullName" type="text" placeholder="Full Name" ng-model="registration.pocName" required>
                 </label>
-                
-                <label class="item item-input item-stacked-label">
+                <div class="form-errors" ng-show="registerForm.fullName.$touched && registerForm.fullName.$invalid" ng-messages="registerForm.fullName.$error" ng-messages-include="templates/formErrorMessages.html"></div>
+
+                <label class="item item-input item-stacked-label" ng-class="{'has-error' : registerForm.contactNumber.$touched && registerForm.contactNumber.$invalid}">
                     <span class="input-label">Contact Number</span>
-                    <input type="text" placeholder="Contact Number" ng-model="registration.pocNumber">
+                    <input name="contactNumber" type="tel" placeholder="Contact Number" ng-model="registration.pocNumber" required maxlength="8">
                 </label>
+                <div class="form-errors" ng-show="registerForm.contactNumber.$touched && registerForm.contactNumber.$invalid" ng-messages="registerForm.contactNumber.$error" ng-messages-include="templates/formErrorMessages.html"></div>
+
                 <br>
                 <button class="button button-block btn blue" ng-click="submit()">
                     Sign Up Now!
                 </button>
-          </div>
-            <!-- Added -->
-            
-            <!-- REMOVED  
-          <div class="list">
-            <label class="item item-input item-stacked-label">
-              <span class="input-label">Username</span>
-              <input type="text" placeholder="Username" ng-model="registration.username">
-            </label>
-            <label class="item item-input item-stacked-label">
-              <span class="input-label">Password</span>
-              <input type="password" placeholder="Password" ng-model="registration.password">
-            </label>
-            <label class="item item-input item-stacked-label">
-              <span class="input-label">Confirm Password</span>
-              <input type="password" placeholder="Confirm Password" ng-model="registration.confirmPassword">
-            </label>
-            
-            <label class="item item-input item-select">
-                <div class="input-label">
-                  Organization Name
-                </div>
-                <select ng-model="registration.organizationName">
-                  <option ng-repeat="VWO in VWOList">{{VWO.organizationName}}</option>
-                </select>
-            </label>  
-              
-            <label class="item item-input item-stacked-label">
-              <span class="input-label">Email</span>
-              <input type="text" placeholder="Email" ng-model="registration.email">
-            </label>
-            <label class="item item-input item-stacked-label">
-              <span class="input-label">Full Name</span>
-              <input type="text" placeholder="Full Name" ng-model="registration.pocName">
-            </label>
-            <label class="item item-input item-stacked-label">
-              <span class="input-label">Contact Number</span>
-              <input type="text" placeholder="Contact Number" ng-model="registration.pocNumber">
-            </label>
-            <button class="button button-block button-positive" ng-click="submit()">
-              Register
-            </button>
-          </div>
-             REMOVED -->
-        </ion-content>
+            </div>
+        </form>
+        <!-- Added -->
+
+        <!-- REMOVED  
+      <div class="list">
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Username</span>
+          <input type="text" placeholder="Username" ng-model="registration.username">
+        </label>
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Password</span>
+          <input type="password" placeholder="Password" ng-model="registration.password">
+        </label>
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Confirm Password</span>
+          <input type="password" placeholder="Confirm Password" ng-model="registration.confirmPassword">
+        </label>
+        
+        <label class="item item-input item-select">
+            <div class="input-label">
+              Organization Name
+            </div>
+            <select ng-model="registration.organizationName">
+              <option ng-repeat="VWO in VWOList">{{VWO.organizationName}}</option>
+            </select>
+        </label>  
+          
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Email</span>
+          <input type="text" placeholder="Email" ng-model="registration.email">
+        </label>
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Full Name</span>
+          <input type="text" placeholder="Full Name" ng-model="registration.pocName">
+        </label>
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Contact Number</span>
+          <input type="text" placeholder="Contact Number" ng-model="registration.pocNumber">
+        </label>
+        <button class="button button-block button-positive" ng-click="submit()">
+          Register
+        </button>
+      </div>
+         REMOVED -->
+    </ion-content>
 </ion-view>

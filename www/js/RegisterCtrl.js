@@ -84,4 +84,21 @@ angular.module('starter.controllers')
 
             }
         })
-        ;
+        
+        
+                    .directive('passwordMatch', function () {
+                return {
+                    restrict: 'A',
+                    require: 'ngModel',
+                    link: function ($scope, $element, $attrs, ngModel) {
+                        ngModel.$validators.passwordMatch = function (modelValue) {
+                            //true or false based on custom dir validation
+                            if ($scope.registration.password !== modelValue) {
+                                return false;
+                            }
+
+                            return true;
+                        };
+                    }
+                };
+            });

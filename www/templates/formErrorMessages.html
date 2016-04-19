@@ -1,7 +1,10 @@
-<div class="form-error" ng-message="required">This field is required.</div>
-<div class="form-error" ng-message="email">Please enter a valid email.</div>
-<div class="form-error" ng-message="minlength">This field is must be at least 5 characters.</div>
-<div class="form-error" ng-message="maxlength">This field is must be less than 50 characters</div>
+<div class="form-error" ng-message="required"><i class="icon ion-information-circled"></i> This field is required</div>
+<div class="form-error" ng-message="email"><i class="icon ion-information-circled"></i> Please enter a valid email</div>
+<!--<div class="form-error" ng-message="minlength">This field is must be at least 5 characters.</div>
+<div class="form-error" ng-message="maxlength">This field is must be less than 8 characters.</div>-->
+<div class="form-error" ng-message="passwordMatch"><i class="icon ion-information-circled"></i> Password and confirmation password does not match</div>
+<div class="form-error" ng-message="matchNewToConfirmPassword"><i class="icon ion-information-circled"></i> Password and confirmation password does not match</div>
+<div class="form-error" ng-message="matchConfirmToNewPassword"><i class="icon ion-information-circled"></i> Password and confirmation password does not match</div>
 <div  ng-message="validatePickupTime"><i class="icon ion-information-circled"></i> Please select a pickup timing between {{currentJob.timeslot}}</div>
 <div  ng-message="validateDeliveryTime"><i class="icon ion-information-circled"></i> Please select a delivery timing between {{currentJob.timeslot}}</div>
 <!--<div class="form-error" ng-message="validatePickupBeforeDeliveryTime"><i class="icon ion-information-circled"></i> Pickup time should be before delivery time</div>
