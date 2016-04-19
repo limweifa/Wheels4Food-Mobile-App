@@ -40,7 +40,7 @@
                                     $localstorage.set('userID', response.data.user.id);
                                     $localstorage.set('role', response.data.user.role);
                                     $localstorage.set('organizationName', response.data.user.organizationName);
-                                   $scope.$parent.userID = response.data.user.id;
+                                    $scope.$parent.userID = response.data.user.id;
 //                                    localStorageService.set('authorizationData', {
 //                                        userID: response.data.user.id,
 //                                        username: response.data.user.username,

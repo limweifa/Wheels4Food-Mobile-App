@@ -1,8 +1,6 @@
 angular.module('starter.controllers')
 
-        .controller('JobsCtrl', function ($scope, $state, $stateParams, $http, $filter, $localstorage, api, $ionicPopup, $ionicModal) {
-            console.log($state);
-            // console.log("JobsCtrl");
+        .controller('JobsCtrl', function ($rootScope, $scope, $state, $stateParams, $http, $filter, $localstorage, api, $ionicPopup, $ionicModal) {
             $scope.username = $localstorage.get('username');
             $scope.userID = $localstorage.get('userID');
             $scope.organizationName = $localstorage.get('organizationName');
@@ -11,11 +9,8 @@ angular.module('starter.controllers')
             $scope.isValidDeliveryTime = true;
             $scope.pickupBeforeDelivery = true;
 
-            console.log("ORGANIZATION NAME IS: " + $scope.organizationName);
-
             $scope.doRefresh = function () {
                 $http({
-                    //url: api.endpoint + 'GetJobListByUserIdRequest/' + $scope.userID,
                     url: api.endpoint + 'GetJobListByOrganizationNameRequest/' + $scope.organizationName,
                     method: 'GET'
                 }).then(function (response) {
@@ -27,8 +22,6 @@ angular.module('starter.controllers')
                     method: 'GET'
                 }).then(function (response) {
                     $scope.demandItemList = response.data;
-                    console.log("GetDemandItemListRequest SUCCESS");
-                    console.log($scope.demandItemList);
                 }).finally(function () {
                     // Stop the ion-refresher from spinning
                     $scope.$broadcast('scroll.refreshComplete');
@@ -41,10 +34,6 @@ angular.module('starter.controllers')
                 method: 'GET'
             }).then(function (response) {
                 $scope.jobList = response.data;
-                console.log("JOBLIST");
-                console.log(response.data);
-//                $scope.currentPage = 1;
-//                $scope.pageSize = 10;
             });
 
             $http({
@@ -52,8 +41,6 @@ angular.module('starter.controllers')
                 method: 'GET'
             }).then(function (response) {
                 $scope.demandItemList = response.data;
-                console.log("GetDemandItemListRequest SUCCESS");
-                console.log($scope.demandItemList);
             });
 
             $scope.view = function (job) {
@@ -122,10 +109,6 @@ angular.module('starter.controllers')
                             $scope.collectionTimeTwelveHours = $filter('date')(selectedTime, 'hh:mm a');
                             $scope.pickupHours = parseInt($filter('date')(selectedTime, 'hh'));
                             $scope.pickupMinutes = parseInt($filter('date')(selectedTime, 'mm'));
-//                            $scope.pickupPeriod = parseInt($filter('date')(selectedTime, 'a'));
-                            console.log("PICKUPHOURS: " + $scope.pickupHours + " TYPE: " + typeof($scope.pickupHours));
-                            console.log($scope.pickupMinutes);
-                            console.log($scope.pickupPeriod);
                         }
                     }
 
@@ -139,7 +122,6 @@ angular.module('starter.controllers')
                             $scope.deliveryTimeTwelveHours = $filter('date')(selectedTime, 'hh:mm a');
                             $scope.deliveryHours = parseInt($filter('date')(selectedTime, 'hh'));
                             $scope.deliveryMinutes = parseInt($filter('date')(selectedTime, 'mm'));
-//                            $scope.deliveryPeriod = parseInt($filter('date')(selectedTime, 'a'));
                         }
                     }
 
@@ -148,7 +130,6 @@ angular.module('starter.controllers')
             };
 
             $scope.acceptJob = function (job) {
-                console.log("In accept job method liao")
                 $http({
                     url: api.endpoint + 'AcceptJobRequest',
                     method: 'PUT',
@@ -163,41 +144,28 @@ angular.module('starter.controllers')
                     }
                 }).then(function (response) {
                     if (response.data.isAccepted) {
-                        console.log("Job Successfully Accepted!");
+                        $rootScope.$broadcast('jobAccepted', "Accepted");
                         $scope.modal.hide();
-//                        $state.go('tab.myjobs');
-//                        $state.go($state.current, $stateParams, {reload: true, inherit: false});
-                        $state.go('tab.myjobs');             
-//                        $scope.modal.hide();
+                        $state.go('tab.myjobs');
                         $scope.showAlert();
 
                     }
-                    $scope.showAlert = function () {
-                        var alertAcceptJobSuccessPopup = $ionicPopup.alert({
-                            title: 'Job Successfully Accepted',
-                            template: 'Thank you for accepting the job!',
-                            okType: 'button-calm'
-                        });
 
-                        alertAcceptJobSuccessPopup.then(function (res) {
-                            console.log('Thank you for helping out!');
-                        });
-                    };
+                });
+            };
+
+            $scope.showAlert = function () {
+                var alertAcceptJobSuccessPopup = $ionicPopup.alert({
+                    title: 'Job Successfully Accepted',
+                    template: 'Thank you for accepting the job!',
+                    okType: 'button-calm'
+                });
+
+                alertAcceptJobSuccessPopup.then(function (res) {
+                    //console.log('Thank you for helping out!');
                 });
             };
             
-            $scope.showAlert = function () {
-                            var alertAcceptJobSuccessPopup = $ionicPopup.alert({
-                                title: 'Job Successfully Accepted',
-                                template: 'Thank you for accepting the job!',
-                                okType: 'button-calm'
-                            });
-
-                            alertAcceptJobSuccessPopup.then(function (res) {
-                                console.log('Thank you for helping out!');
-                            });
-                        };
-
             //initialize timepicker first
             $scope.timePickerObjectPickup = {
                 //inputEpochTime: ((new Date()).getHours() * 60 * 60), //Optional
@@ -270,18 +238,40 @@ angular.module('starter.controllers')
                 $state.go('maps');
             };
 
-            $scope.goToMapRouting = function () {
+            $scope.goToMapRouting = function (job) {
+                $http({
+                    url: api.endpoint + 'GetJobByIdRequest/' + job.id,
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                }).then(function (response) {
+                    $scope.currentJob = response.data;
+                    $rootScope.$broadcast('eventName', $scope.currentJob);
+                })
                 $state.go('maprouting');
             };
-            
-            $scope.validatePickupBeforeDeliveryTime = function(){
+
+            $scope.validatePickupBeforeDeliveryTime = function () {
                 $scope.pickupBeforeDelivery = true;
-                if($scope.pickupHours !== undefined && $scope.pickupMinutes !== undefined) {
-console.log("VALIDATING...");
-                if($scope.pickupHours > $scope.deliveryHours || ($scope.pickupHours === $scope.deliveryHours && $scope.pickupMinutes >= $scope.deliveryMinutes)){    
-                    $scope.pickupBeforeDelivery = false;
-                } 
-                 }
+                if ($scope.pickupHours !== undefined && $scope.pickupMinutes !== undefined) {
+                    if ($scope.pickupHours > $scope.deliveryHours || ($scope.pickupHours === $scope.deliveryHours && $scope.pickupMinutes >= $scope.deliveryMinutes)) {
+                        $scope.pickupBeforeDelivery = false;
+                    }
+                }
+            }
+
+            $scope.sortType = "deliveryDate";
+            //false is ascending, true is descending
+            $scope.sortReverse = false;
+
+            $scope.sortBy = function (job) {
+                if ($scope.sortType === "deliveryDate") {
+                    var parts = job.deliveryDate.split('/');
+                    var date = new Date(parseInt(parts[2]), parseInt(parts[1]), parseInt(parts[0]));
+                    return date;
+                }
+                return job[$scope.sortType];
             }
 
         })
@@ -296,13 +286,10 @@ console.log("VALIDATING...");
                         $scope.isValidPickupTime = true;
                         //true or false based on custom dir validation
 
-                        if (typeof (modelValue) !== 'undefined' && $scope.collectionTimeTwelveHours !== "") { 
+                        if (typeof (modelValue) !== 'undefined' && $scope.collectionTimeTwelveHours !== "") {
                             var hours = parseInt(modelValue.substring(0, 2));
                             var minutes = parseInt(modelValue.substring(3, 5));
                             var period = modelValue.substring(6, 8);
-                            console.log("Hours: " + hours);
-                            console.log("Minutes: " + minutes);
-                            console.log("Period: " + period);
                             if ($scope.currentJob.timeslot === "9AM-12PM") {
                                 if (hours === 12 && minutes === 0 && period === "PM") {
                                     $scope.validatePickupBeforeDeliveryTime();
@@ -345,9 +332,6 @@ console.log("VALIDATING...");
                             var hours = parseInt(modelValue.substring(0, 2));
                             var minutes = parseInt(modelValue.substring(3, 5));
                             var period = modelValue.substring(6, 8);
-                            console.log("Hours: " + hours);
-                            console.log("Minutes: " + minutes);
-                            console.log("Period: " + period);
                             if ($scope.currentJob.timeslot === "9AM-12PM") {
                                 if (hours === 12 && minutes === 0 && period === "PM") {
                                     $scope.validatePickupBeforeDeliveryTime();
@@ -378,7 +362,7 @@ console.log("VALIDATING...");
                 }
             };
         });
-        
+
 //        .directive('validatePickupBeforeDeliveryTime', function () {
 //            return {
 //                restrict: 'A',

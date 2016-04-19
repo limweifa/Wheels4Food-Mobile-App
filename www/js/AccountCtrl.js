@@ -2,7 +2,7 @@ angular.module('starter.controllers')
 
         .controller('AccountCtrl', function ($scope, $state, $http, $localstorage, $timeout, api, $ionicHistory, $ionicPopup, $ionicModal) {
             $scope.username = $localstorage.get('username');
-            
+
             $scope.password = {
                 oldPassword: '',
                 newPassword: '',
@@ -11,7 +11,6 @@ angular.module('starter.controllers')
 
             console.log($scope.username);
 
-//            $scope.viewAccount = function () {
             $http({
                 url: api.endpoint + 'GetUserByUsernameRequest/' + $scope.username,
                 method: 'GET'
@@ -20,7 +19,6 @@ angular.module('starter.controllers')
                 $scope.user = response.data;
                 $scope.originalUser = angular.copy($scope.user);
             });
-//            }
             $scope.logout = function () {
 
                 var confirmLogoutPopup = $ionicPopup.confirm({
@@ -36,9 +34,7 @@ angular.module('starter.controllers')
                             $ionicHistory.clearHistory();
                             $localstorage.clear();
                         }, 300);
-                        console.log('You are sure');
                     } else {
-                        console.log('You are not sure');
                     }
                 });
 
@@ -54,7 +50,6 @@ angular.module('starter.controllers')
 
                 confirmUpdatePopup.then(function (res) {
                     if (res) {
-                        console.log('Yes Update');
                         $http({
                             url: api.endpoint + 'UpdateUserRequest',
                             method: 'PUT',
@@ -76,12 +71,6 @@ angular.module('starter.controllers')
                                     scope: $scope,
                                     okType: 'button-calm'
                                 });
-
-//                        ngDialog.openConfirm({
-//                            template: '/Wheels4Food/resources/ngTemplates/updateProfileError.html',
-//                            className: 'ngdialog-theme-default dialog-generic',
-//                            scope: $scope
-//                        });
                             }
                         });
                     } else {
@@ -117,8 +106,7 @@ angular.module('starter.controllers')
                             console.log($scope.oldPassword);
                             if (response.data.isChanged) {
 
-                                //$scope.originalUser = angular.copy($scope.user);
-                                $scope.modal2.hide();   
+                                $scope.modal2.hide();
                                 $scope.showAlert();
                                 $scope.password.oldPassword = "";
                                 $scope.password.newPassword = "";
@@ -132,12 +120,6 @@ angular.module('starter.controllers')
                                     scope: $scope,
                                     okType: 'button-calm'
                                 });
-
-//                        ngDialog.openConfirm({
-//                            template: '/Wheels4Food/resources/ngTemplates/updateProfileError.html',
-//                            className: 'ngdialog-theme-default dialog-generic',
-//                            scope: $scope
-//                        });
                             }
                         });
                     } else {
@@ -151,13 +133,9 @@ angular.module('starter.controllers')
                     title: 'Password Changed',
                     template: 'Your password has been changed successfully.',
                     okType: 'button-calm'
-
                 });
 
                 changePasswordSuccessfulPopup.then(function (res) {
-                    console.log("Successfully changed");
-//                                                $state.go($state.current, $stateParams, {reload: true, inherit: false});                                                
-
                 });
             };
 
@@ -171,7 +149,6 @@ angular.module('starter.controllers')
                 $scope.password.oldPassword = undefined;
                 $scope.password.newPassword = undefined;
                 $scope.password.confirmNewPassword = undefined;
-                //$scope.modal2.hide();
             }
 
             $ionicModal.fromTemplateUrl('templates/editModal.html', {
@@ -196,7 +173,7 @@ angular.module('starter.controllers')
                     $scope.modal1.show();
                 } else {
                     $scope.modal2.show();
-                    
+
                 }
             };
 

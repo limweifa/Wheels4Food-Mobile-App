@@ -55,12 +55,12 @@
 
                 <label class="item item-input item-stacked-label" ng-class="{'has-error' : registerForm.contactNumber.$touched && registerForm.contactNumber.$invalid}">
                     <span class="input-label">Contact Number</span>
-                    <input name="contactNumber" type="tel" placeholder="Contact Number" ng-model="registration.pocNumber" required maxlength="8">
+                    <input name="contactNumber" type="tel" placeholder="Contact Number" ng-model="registration.pocNumber" required minlength="8" maxlength="8">
                 </label>
                 <div class="form-errors" ng-show="registerForm.contactNumber.$touched && registerForm.contactNumber.$invalid" ng-messages="registerForm.contactNumber.$error" ng-messages-include="templates/formErrorMessages.html"></div>
 
                 <br>
-                <button class="button button-block btn blue" ng-click="submit()">
+                <button class="button button-block btn blue" ng-click="submit()" ng-disabled="registerForm.$invalid">
                     Sign Up Now!
                 </button>
             </div>

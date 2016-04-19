@@ -1,16 +1,26 @@
 angular.module('starter.controllers')
 
         .controller('MapRoutingCtrl', function ($scope, $state, $stateParams, $location, $anchorScroll, $ionicScrollDelegate, $ionicPlatform, $ionicLoading, $ionicHistory, $cordovaGeolocation, $ionicLoading, $http, $filter, $localstorage, api, $ionicPopup, $ionicModal) {
-            console.log($state);
-                    $scope.username = $localstorage.get('username');
+            $scope.pickupPostalCode = "";
+            $scope.username = $localstorage.get('username');
             $scope.userID = $localstorage.get('userID');
             $scope.myLatLng = "";
+            $scope.pickupLatLng = "";
             $scope.showDirections = false;
-//            $scope.doRefresh = function () {
-//            }
-//            
-//            var markersArray = [];
+
+            $scope.location = {
+                origin: '',
+                destination: ''
+            };
+            $scope.toLocation = "";
+            $scope.errorLocation = "";
+            $scope.travel = {
+                type: ''
+            }
+            $scope.travelMode = google.maps.TravelMode.DRIVING;
+
             $ionicPlatform.ready(function () {
+
                 $ionicLoading.show({
                     template: '<ion-spinner icon="bubbles"></ion-spinner><br/>Getting Directions'
                 });
@@ -20,97 +30,135 @@ angular.module('starter.controllers')
                     timeout: 20000,
                     maximumAge: 0
                 };
+                $scope.$on('eventName', function (event, currentJob) {
+                    $scope.pickupPostalCode = currentJob.demand.supplier.postalCode;
+                    $scope.deliveryPostalCode = currentJob.demand.user.postalCode;
 
-                $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
-                    var lat = position.coords.latitude;
-                    var long = position.coords.longitude;
+                    $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
+                        var lat = position.coords.latitude;
+                        var long = position.coords.longitude;
 
-                    var myLatlng = new google.maps.LatLng(lat, long);
-                    $scope.myLatLng = myLatlng;
+                        var myLatlng = new google.maps.LatLng(lat, long);
+                        $scope.myLatLng = myLatlng;
+                        $scope.originLatLng = myLatlng;
 
-//                    console.log("lat: " + lat);
-//                    console.log("long: " + long);
-//                    console.log("myLatlng: " + myLatlng);
+                        var mapOptions = {
+                            center: myLatlng,
+                            zoom: 16,
+                            mapTypeId: google.maps.MapTypeId.ROADMAP
+                        };
 
-                    var mapOptions = {
-                        center: myLatlng,
-                        zoom: 16,
-                        mapTypeId: google.maps.MapTypeId.ROADMAP
-                    };
+                        initMap();
+                        $scope.map = map;
+                        $ionicLoading.hide();
 
-//                        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-                    initMap();
 
-//                        google.maps.event.addListenerOnce(map, 'idle', function () {
-//
-//                            var marker = new google.maps.Marker({
-//                                map: map,
-//                                animation: google.maps.Animation.DROP,
-//                                position: myLatlng
-//                            });
-//
-//                            var infoWindow = new google.maps.InfoWindow({
-//                                content: "Here I am!"
-//                            });
-//
-//                            google.maps.event.addListener(marker, 'click', function () {
-//                                infoWindow.open($scope.map, marker);
-//                            });
-//
-//                        });
-//                    var marker = new google.maps.Marker({
-//                        position: myLatlng,
-//                        map: map,
-//                        draggable: true
-//                    });
-
-                    $scope.map = map;
-                    $ionicLoading.hide();
-
-                }, function (err) {
-                    $ionicLoading.hide();
-                    console.log(err);
-                }).finally(function () {
-                    // Stop the ion-refresher from spinning
-                    $scope.$broadcast('scroll.refreshComplete');
+                    }, function (err) {
+                        $ionicLoading.hide();
+                        console.log(err);
+                        $scope.errorLocation = "Sorry, we are unable to get the directions at the moment. Please ensure that your location service is turned on and try again later."
+                        $scope.showAlert();
+                    }).finally(function () {
+                        // Stop the ion-refresher from spinning
+                        $scope.$broadcast('scroll.refreshComplete');
+                    });
                 });
-                
 //                ////to convert postal code to latlong and display marker on map
 //                    var bounds = new google.maps.LatLngBounds();
 //                    var geocoder = new google.maps.Geocoder();
-//
-//                    geocodeAddress(geocoder, map, "805180");
-//                    geocodeAddress(geocoder, map, "319773");
-//                    function geocodeAddress(geocoder, resultsMap, address) {
-//                        //var address = "805186"; //document.getElementById('address').value;
-//                        geocoder.geocode({'address': address}, function (results, status) {
-//                            if (status === google.maps.GeocoderStatus.OK) {
-//                                var currentLatLng = results[0].geometry.location;
-//                                console.log("CURRENT LAT LNG: " + currentLatLng);
-////                                resultsMap.setCenter(results[0].geometry.location);
-////                                var marker = new google.maps.Marker({
-////                                    map: resultsMap,
-////                                    position: results[0].geometry.location
-////
-////                                });
-//
-////                                markers.push([address, currentLatLng]);
-//                                
-//                            } else {
-//                                //alert('Geocode was not successful for the following reason: ' + status);
-//                                console.log("Fail retrieving postal code");
-//                            }
-//                        });
-//                    }
-////                    console.log("MARKERS ARRAY:" + markers);
 
+                function geocodeDeliveryAddress(geocoder, resultsMap, address) {
+//                        //var address = "805186"; //document.getElementById('address').value;
+                    geocoder.geocode({'address': "Singapore " + address}, function (results, status) {
+                        if (status === google.maps.GeocoderStatus.OK) {
+//                                var currentLatLng = results[0].geometry.location;
+                            $scope.deliveryLatLng = results[0].geometry.location;
+                        }
+                    });
+                }
+
+
+                function geocodePickupAddress(geocoder, resultsMap, address) {
+//                        //var address = "805186"; //document.getElementById('address').value;
+                    geocoder.geocode({'address': "Singapore " + address}, function (results, status) {
+                        if (status === google.maps.GeocoderStatus.OK) {
+//                                var currentLatLng = results[0].geometry.location;
+                            $scope.pickupLatLng = results[0].geometry.location;
+                            $scope.destinationLatLng = results[0].geometry.location;
+                            var markerArray = [];
+
+                            // Instantiate a directions service.
+                            var directionsService = new google.maps.DirectionsService;
+                            var map = new google.maps.Map(document.getElementById('map'), {
+                                zoom: 13,
+                                center: $scope.myLatLng
+                            });
+                            // Create a renderer for directions and bind it to the map.
+                            var directionsDisplay = new google.maps.DirectionsRenderer({map: map});
+                            //directionsDisplay.setPanel(document.getElementById('right-panel'));
+                            directionsDisplay.setPanel(document.getElementById('directions'));
+                            // Instantiate an info window to hold step text.
+                            var stepDisplay = new google.maps.InfoWindow;
+                            // Display the route between the initial start and end selections.
+                            calculateAndDisplayRoute(
+                                    directionsDisplay, directionsService, markerArray, stepDisplay, map);
+
+                            // Listen to change events from the start and end lists.
+                            var onChangeHandler = function () {
+                                if ($scope.location.origin === "pickupLocation") {
+                                    $scope.originLatLng = $scope.pickupLatLng;
+                                } else if ($scope.location.origin === "deliveryLocation") {
+                                    $scope.originLatLng = $scope.deliveryLatLng;
+                                } else {
+                                    $scope.originLatLng = $scope.myLatLng;
+                                }
+
+                                calculateAndDisplayRoute(
+                                        directionsDisplay, directionsService, markerArray, stepDisplay, map);
+                            };
+
+                            var onChangeHandler2 = function () {
+                                if ($scope.location.destination === "pickupLocation") {
+                                    $scope.destinationLatLng = $scope.pickupLatLng;
+                                } else if ($scope.location.destination === "deliveryLocation") {
+                                    $scope.destinationLatLng = $scope.deliveryLatLng;
+                                } else {
+                                    $scope.destinationLatLng = $scope.myLatLng;
+                                }
+
+                                calculateAndDisplayRoute(
+                                        directionsDisplay, directionsService, markerArray, stepDisplay, map);
+                            };
+
+                            var onChangeHandlerTravelMode = function () {
+                                if ($scope.travel.type === "WALKING") {
+                                    $scope.travelMode = google.maps.TravelMode.WALKING;
+                                } else {
+                                    $scope.travelMode = google.maps.TravelMode.DRIVING;
+                                }
+
+                                calculateAndDisplayRoute(
+                                        directionsDisplay, directionsService, markerArray, stepDisplay, map);
+                            };
+                            document.getElementById('start').addEventListener('change', onChangeHandler);
+                            document.getElementById('end').addEventListener('change', onChangeHandler2);
+                            document.getElementById('travelMode').addEventListener('change', onChangeHandlerTravelMode);
+                        } else {
+                            //alert('Geocode was not successful for the following reason: ' + status);
+                            console.log("Fail retrieving postal code");
+                            $scope.showAlert();
+                        }
+                    });
+                }
                 //DIRECTIONS MATRIX
 
                 function initMap() {
-                    var markerArray = [];
-
-                    // Instantiate a directions service.
-                    var directionsService = new google.maps.DirectionsService;
+                    var bounds = new google.maps.LatLngBounds();
+                    var geocoder = new google.maps.Geocoder();
+//                    var markerArray = [];
+//
+//                    // Instantiate a directions service.
+//                    var directionsService = new google.maps.DirectionsService;
 
                     // Create a map and center it on Manhattan.
                     var map = new google.maps.Map(document.getElementById('map'), {
@@ -118,24 +166,8 @@ angular.module('starter.controllers')
                         center: $scope.myLatLng
                     });
 
-                    // Create a renderer for directions and bind it to the map.
-                    var directionsDisplay = new google.maps.DirectionsRenderer({map: map});
-                    //directionsDisplay.setPanel(document.getElementById('right-panel'));
-                    directionsDisplay.setPanel(document.getElementById('directions'));
-
-                    // Instantiate an info window to hold step text.
-                    var stepDisplay = new google.maps.InfoWindow;
-
-                    // Display the route between the initial start and end selections.
-                    calculateAndDisplayRoute(
-                            directionsDisplay, directionsService, markerArray, stepDisplay, map);
-                    // Listen to change events from the start and end lists.
-//                    var onChangeHandler = function () {
-//                        calculateAndDisplayRoute(
-//                                directionsDisplay, directionsService, markerArray, stepDisplay, map);
-//                    };
-//                    document.getElementById('start').addEventListener('change', onChangeHandler);
-//                    document.getElementById('end').addEventListener('change', onChangeHandler);
+                    geocodePickupAddress(geocoder, map, $scope.pickupPostalCode);
+                    geocodeDeliveryAddress(geocoder, map, $scope.deliveryPostalCode);
                 }
 
                 function calculateAndDisplayRoute(directionsDisplay, directionsService,
@@ -146,11 +178,11 @@ angular.module('starter.controllers')
                     }
 
                     // Retrieve the start and end locations and create a DirectionsRequest using
-                    // WALKING directions.
+                    // DRIVING/WALKING directions.
                     directionsService.route({
-                        origin: $scope.myLatLng, //{lat: 1.379896, lng: 103.872013},//document.getElementById('start').value,
-                        destination: {lat: 1.337389, lng: 103.882417}, //document.getElementById('end').value,
-                        travelMode: google.maps.TravelMode.DRIVING
+                        origin: $scope.originLatLng,
+                        destination: $scope.destinationLatLng,
+                        travelMode: $scope.travelMode
                     }, function (response, status) {
                         // Route the directions and pass the response to a function to create
                         // markers for each step.
@@ -164,6 +196,7 @@ angular.module('starter.controllers')
                         }
                     });
                 }
+
 
                 function showSteps(directionResult, markerArray, stepDisplay, map) {
                     // For each step, place a marker, and add the text to the marker's infowindow.
@@ -187,59 +220,6 @@ angular.module('starter.controllers')
                         stepDisplay.open(map, marker);
                     });
                 }
-//                $ionicLoading.show({
-//                    template: '<ion-spinner icon="bubbles"></ion-spinner><br/>Acquiring location!'
-//                });
-//
-//                var posOptions = {
-//                    enableHighAccuracy: true,
-//                    timeout: 20000,
-//                    maximumAge: 0
-//                };
-//
-//                $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
-//                    var lat = position.coords.latitude;
-//                    var long = position.coords.longitude;
-//
-//                    var myLatlng = new google.maps.LatLng(lat, long);
-//
-//                    console.log("lat: " + lat);
-//                    console.log("long: " + long);
-//                    console.log("myLatlng: " + myLatlng);
-//
-//                    var mapOptions = {
-//                        center: myLatlng,
-//                        zoom: 16,
-//                        mapTypeId: google.maps.MapTypeId.ROADMAP
-//                    };
-//
-//                    var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-//
-//                    google.maps.event.addListenerOnce(map, 'idle', function () {
-//
-//                        var marker = new google.maps.Marker({
-//                            map: map,
-//                            animation: google.maps.Animation.DROP,
-//                            position: myLatlng
-//                        });
-//
-//                        var infoWindow = new google.maps.InfoWindow({
-//                            content: "Here I am!"
-//                        });
-//
-//                        google.maps.event.addListener(marker, 'click', function () {
-//                            infoWindow.open($scope.map, marker);
-//                        });
-//
-//                    });
-//                    
-//                    $scope.map = map;
-//                    $ionicLoading.hide();
-//
-//                }, function (err) {
-//                    $ionicLoading.hide();
-//                    console.log(err);
-//                });
 
             });
             $scope.myGoBack = function () {
@@ -260,6 +240,19 @@ angular.module('starter.controllers')
                 $location.hash(anchor);
                 var handle = $ionicScrollDelegate.$getByHandle('content');
                 handle.anchorScroll();
+            };
+            
+            $scope.showAlert = function () {
+                var locationErrorPopup = $ionicPopup.alert({
+                    title: 'Unable to get directions',
+                    template: "Sorry, we are unable to get the directions at the moment. Please ensure that your location service is turned on and try again later.",
+                    okType: 'button-calm'
+                    
+                });
+
+                locationErrorPopup.then(function (res) {
+                    //console.log("Successfully cancelled");
+                });
             };
 
         })

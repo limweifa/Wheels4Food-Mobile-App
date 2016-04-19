@@ -1,39 +1,88 @@
-<ion-view view-title="Directions">      
+<ion-view view-title="Directions" class="maps">      
     <ion-nav-buttons side="left">
         <button class="button button-clear" style="color:white" ng-click="myGoBack()" >
             <i class="icon ion-ios-arrow-back"></i>
             Back</button>
-        
+
     </ion-nav-buttons>
-<!--    <ion-nav-buttons side="right">
-         <button class="button button-clear button-positive" ng-click="doRefresh()">Refresh <i class="ion-refresh" style="padding-left:2px"></i></button>
-    
-    </ion-nav-buttons>-->
+    <!--    <ion-nav-buttons side="right">
+             <button class="button button-clear button-positive" ng-click="doRefresh()">Refresh <i class="ion-refresh" style="padding-left:2px"></i></button>
+        
+        </ion-nav-buttons>-->
     <ion-content data-tap-disabled="true" delegate-handle="content" overflow-scroll="true">
-<!--        <div id="floating-panel">
-    <b>Start: </b>
-    <select id="start">
-      <option value="penn station, new york, ny">Penn Station</option>
-      <option value="grand central station, new york, ny">Grand Central Station</option>
-      <option value="625 8th Avenue, New York, NY, 10018">Port Authority Bus Terminal</option>
-      <option value="staten island ferry terminal, new york, ny">Staten Island Ferry Terminal</option>
-      <option value="101 E 125th Street, New York, NY">Harlem - 125th St Station</option>
-    </select>
-    <b>End: </b>
-    <select id="end">
-      <option value="260 Broadway New York NY 10007">City Hall</option>
-      <option value="W 49th St & 5th Ave, New York, NY 10020">Rockefeller Center</option>
-      <option value="moma, New York, NY">MOMA</option>
-      <option value="350 5th Ave, New York, NY, 10118">Empire State Building</option>
-      <option value="253 West 125th Street, New York, NY">Apollo Theater</option>
-      <option value="1 Wall St, New York, NY">Wall St</option>
-    </select>
-    </div>-->
-    <div id="map"></div>
-    <button class="button button-block btn blue" ng-click="scrollToAnchorWithinCurrentPage('directions')">Show Text Directions</button>
-   
-    <!--<div id="right-panel"></div>-->
-    <a id="directions"></a>
-    <div id="warnings-panel"></div>
+
+        <div class="list nopaddingnomargin" >
+            <label class="item item-input item-select item-text-wrap">
+
+                <div class="input-label reduceinputlabel">
+                    From
+                </div>
+                <select id="start" ng-model="location.origin">
+                    <option value="currentLocation" ng-selected="true">Current Location</option>
+                    <option value="pickupLocation">Pickup Location</option>
+                    <option value="deliveryLocation">Delivery Location</option>
+                </select>
+
+            </label>
+            <label class="item item-input item-select item-text-wrap">
+                <div class="input-label reduceinputlabel">
+                    To
+                </div>
+                <select id="end" ng-model="location.destination">
+                    <option value="currentLocation" ng-hide="location.origin === 'currentlocation'">Current Location</option>
+                    <option value="pickupLocation" ng-hide="location.origin === 'pickupLocation'">Pickup Location</option>
+                    <option value="deliveryLocation" ng-hide="location.origin === 'deliveryLocation'" ng-selected="true">Delivery Location</option>
+                </select>
+            </label>
+            
+
+            <label class="item item-input item-select item-text-wrap">
+                <div class="input-label reduceinputlabel">
+                    Travel Mode
+                </div>
+                <select id="travelMode" ng-model="travel.type">
+                    <option value="DRIVING" ng-selected="true">Driving</option>
+                    <option value="WALKING">Walking</option>
+                </select>
+            </label>
+        </div>
+        <!--currentJob.demand.supplier.postalCode-->
+<!--        <div>
+            <b>Start: </b>
+            <select id="start">
+                <option value="penn station, new york, ny">Penn Station</option>
+                <option value="grand central station, new york, ny">Grand Central Station</option>
+                <option value="625 8th Avenue, New York, NY, 10018">Port Authority Bus Terminal</option>
+                <option value="staten island ferry terminal, new york, ny">Staten Island Ferry Terminal</option>
+                <option value="101 E 125th Street, New York, NY">Harlem - 125th St Station</option>
+            </select>
+            <b>End: </b>
+            <select id="end">
+                <option value="260 Broadway New York NY 10007">City Hall</option>
+                <option value="W 49th St & 5th Ave, New York, NY 10020">Rockefeller Center</option>
+                <option value="moma, New York, NY">MOMA</option>
+                <option value="350 5th Ave, New York, NY, 10118">Empire State Building</option>
+                <option value="253 West 125th Street, New York, NY">Apollo Theater</option>
+                <option value="1 Wall St, New York, NY">Wall St</option>
+            </select>
+        </div>-->
+<!--        Travel Mode: {{travelMode.mode}}
+        Pickup Postal Code: {{pickupPostalCode}} <br>
+        Delivery Postal Code: {{deliveryPostalCode}} <br>
+        <br>
+        My LatLng: {{myLatLng}} <br>
+        Pickup LatLng: {{pickupLatLng}} <br>
+        Delivery LatLng: {{deliveryLatLng}} <br>
+        From Location: {{fromLocation}} <br>
+        <br>
+        To Location: {{toLocation}} <br>
+        Origin LatLng: {{originLatLng}} <br>
+        Destination LatLng: {{destinationLatLng}}-->
+        <div id="map"></div>
+        <button class="button button-block btn-maps blue" ng-click="scrollToAnchorWithinCurrentPage('directions') ">Show Text Directions</button>
+
+        <!--<div id="right-panel"></div>-->
+        <a id="directions"></a>
+        <div class="empty" id="warnings-panel" ></div>
     </ion-content>
 </ion-view>

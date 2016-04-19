@@ -9,15 +9,16 @@
             on-refresh="doRefresh()">
         </ion-refresher>
 
-        <button class="button button-block ion-android-locate padding-right  btn-findlocation blue-acc removebottommargin" ng-click="goToMap()">
+        <button class="button button-block ion-android-locate padding-right btn-findlocation blue-acc removebottommargin" ng-click="goToMap()">
             Find My Current Location
         </button>
         
-<!--        <button class="button button-block ion-android-locate padding-right  btn-findlocation blue-acc removebottommargin" ng-click="goToMapRouting()">
-            Map Routing
-        </button>-->
+<!--<div class='row'>
+    <div class='col-20 col-offset-80'><button class="button button-small btn blue icon-right" ng-click="view(job)"><strong>Sort <i class="ion-arrow-right-b"></i></strong></button></div>
+</div>-->
+                
         <div class="list" >
-            <div ng-repeat="job in jobList" class="item item-text-wrap reduceitempadding" >
+            <div ng-repeat="job in jobList | orderBy:sortBy:sortReverse" class="item item-text-wrap reduceitempadding" >
 <!--                <div class="item item-divider reducepaddingnone">
                     <strong>Items</strong>
                 </div>
@@ -30,15 +31,15 @@
                 </div>
                 <label class="item item-input reducepaddingnone">
                     <span class="input-label reduceinputlabel"><i class="ion-calendar"></i> Date & Time</span>
-                    {{job.deliveryDate}}, {{job.timeslot}}
+                    <div class="item-text-wrap editwidth">{{job.deliveryDate}}, {{job.timeslot}}</div>
                 </label>
                 <label class="item item-input reducepaddingnone">
                     <span class="input-label reduceinputlabel"><i class="ion-ios-location"></i> Pickup</span>
-                    {{job.demand.supplier.address}}
+                    <div class="item-text-wrap editwidth">{{job.demand.supplier.address}} Singapore {{job.demand.supplier.postalCode}}</div>
                 </label>
                 <label class="item item-input reducepaddingnone">
                     <span class="input-label reduceinputlabel"><i class="ion-ios-location"></i> Delivery</span>
-                    {{job.demand.user.address}}
+                    <div class="item-text-wrap editwidth">{{job.demand.user.address}} Singapore {{job.demand.supplier.postalCode}}</div>
                 </label>
 <!--                <div class="row">
                     <div class="col col-40 col-offset-20">
@@ -48,8 +49,8 @@
                         <button class="button button-small button-block button-calm icon-right" ng-click="view(job)"><strong>View Job Details  <i class="ion-arrow-right-b"></i></strong></button>
                     </div>
                 </div>-->
-                <div class="reducebuttonpadding" style="text-align:right"><button class="button button-small button-calm icon-right" ng-click="view(job)"><strong>View Job Details  <i class="ion-arrow-right-b"></i></strong></button></div>
-                <div class="reducebuttonpadding" style="text-align:right"><button class="button button-small button-calm icon-right" ng-click="goToMapRouting()"><strong>View Directions  <i class="ion-android-map"></i></strong></button></div>
+                <div class="reducebuttonpadding" style="text-align:right"><button class="button button-small btn blue icon-right" ng-click="view(job)"><strong>View Job Details  <i class="ion-arrow-right-b"></i></strong></button></div>
+                <div class="reducebuttonpadding" style="text-align:right"><button class="button button-small btn blue btn icon-right" ng-click="goToMapRouting(job)"><strong>View Directions  <i class="ion-android-map"></i></strong></button></div>
                 <br>
             </div>
         </div>

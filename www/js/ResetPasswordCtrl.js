@@ -6,7 +6,6 @@ angular.module('starter.controllers')
             }
             
             $scope.submit = function () {
-                console.log("in submit method");
                 $http({
                     url: api.endpoint + 'CreatePendingResetPasswordRequest',
                     method: 'POST',
@@ -22,7 +21,6 @@ angular.module('starter.controllers')
 
                     if (response.data.isCreated) {
                         console.log("successfully reset password");
-                        //$scope.submitFailed = false;
 
                         var resetPasswordSuccessPopup = $ionicPopup.alert({
                             title: 'Reset Password Successful',
@@ -36,7 +34,6 @@ angular.module('starter.controllers')
                         });
 
                     } else {
-                        console.log($scope.error);
                         $scope.error = response.data.errorList[0];
                         //$scope.submitFailed = true;
                         var resetPasswordFailPopup = $ionicPopup.alert({

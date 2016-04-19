@@ -19,7 +19,7 @@
         
         <div class="list">
             <div ng-show="myJobStatus === 'Accepted'">
-            <div class="item item-text-wrap reduceitempadding" ng-repeat="job in jobList" ng-show="job.status === 'Accepted'" >
+            <div class="item item-text-wrap reduceitempadding" ng-repeat="job in jobList | orderBy:sortBy:false" ng-show="job.status === 'Accepted'" >
                 <div class="item item-divider reducepaddingnone">
                     <strong>Delivery Details</strong>
                 </div>
@@ -30,7 +30,7 @@
                 </label>
                 <label class="item item-input reducepaddingnone">
                     <span class="input-label reduceinputlabel"><i class="ion-ios-location"></i> Pickup</span>
-                    <div class="item-text-wrap editwidth">{{job.demand.supplier.address}} </div>
+                    <div class="item-text-wrap editwidth">{{job.demand.supplier.address}} Singapore {{job.demand.supplier.postalCode}}</div>
                 </label>
                 <label class="item item-input reducepaddingnone">
                     <span class="input-label reduceinputlabel"><i class="ion-ios-location"></i> Delivery</span>
@@ -46,8 +46,8 @@
                 </label>
 
                 <!--<div class="reducebuttonpadding" style="text-align:right"><button class="button button-small button-calm icon-right" ng-click="view(job)"><strong>View Job Details <i class="ion-arrow-right-b"></i></strong></button></div>-->
-                <div class="reducebuttonpadding" style="text-align:right"><button class="button button-small button-calm icon-right" ng-click="view(job)"><strong>View Job Details  <i class="ion-arrow-right-b"></i></strong></button></div>
-                <div class="reducebuttonpadding" style="text-align:right"><button class="button button-small button-calm icon-right" ng-click="goToMapRouting()"><strong>View Directions  <i class="ion-android-map"></i></strong></button></div>
+                <div class="reducebuttonpadding" style="text-align:right"><button class="button button-small btn blue icon-right" ng-click="view(job)"><strong>View Job Details  <i class="ion-arrow-right-b"></i></strong></button></div>
+                <div class="reducebuttonpadding" style="text-align:right"><button class="button button-small btn blue icon-right" ng-click="goToMapRouting()"><strong>View Directions  <i class="ion-android-map"></i></strong></button></div>
                 <br>
                 <!--                    <div class="buttons">-->
                 <!--                    <button class="button button-energized">
@@ -64,7 +64,7 @@
             </div>
             </div>
             <div ng-show="myJobStatus === 'Completed'">
-                <div class="item item-text-wrap reduceitempadding" ng-repeat="job in jobList" ng-show="job.status === 'Completed'">
+                <div class="item item-text-wrap reduceitempadding" ng-repeat="job in jobList | orderBy:sortBy:sortReverse" ng-show="job.status === 'Completed'">
                     <div class="item item-divider reducepaddingnone">
                         <strong>Delivery Details</strong>
                     </div>
@@ -75,7 +75,7 @@
                     </label>
                     <label class="item item-input reducepaddingnone">
                         <span class="input-label reduceinputlabel"><i class="ion-ios-location"></i> Pickup</span>
-                        <div class="item-text-wrap editwidth">{{job.demand.supplier.address}} </div>
+                        <div class="item-text-wrap editwidth">{{job.demand.supplier.address}} Singapore {{job.demand.supplier.postalCode}}</div>
                     </label>
                     <label class="item item-input reducepaddingnone">
                         <span class="input-label reduceinputlabel"><i class="ion-ios-location"></i> Delivery</span>
@@ -90,7 +90,7 @@
                         <div class="item-text-wrap editwidth">{{job.deliveryTime}}</div>
                     </label>
 
-                    <div class="reducebuttonpadding" style="text-align:right"><button class="button button-small button-calm icon-right" ng-click="view(job)"><strong>View Job Details <i class="ion-arrow-right-b"></i></strong></button></div>
+                    <div class="reducebuttonpadding" style="text-align:right"><button class="button button-small btn blue icon-right" ng-click="view(job)"><strong>View Job Details <i class="ion-arrow-right-b"></i></strong></button></div>
                     <br>
                     <!--                    <div class="buttons">-->
                     <!--                    <button class="button button-energized">
@@ -108,7 +108,7 @@
                 </div>
             </div>
             <div ng-show="myJobStatus === 'Cancelled'">
-                <div class="item item-text-wrap reduceitempadding" ng-repeat="job in jobList" ng-show="job.status === 'Cancelled'">
+                <div class="item item-text-wrap reduceitempadding" ng-repeat="job in jobList | orderBy:sortBy:sortReverse" ng-show="job.status === 'Cancelled'">
                     <div class="item item-divider reducepaddingnone">
                         <strong>Delivery Details</strong>
                     </div>
@@ -119,7 +119,7 @@
                     </label>
                     <label class="item item-input reducepaddingnone">
                         <span class="input-label reduceinputlabel"><i class="ion-ios-location"></i> Pickup</span>
-                        <div class="item-text-wrap editwidth">{{job.demand.supplier.address}} </div>
+                        <div class="item-text-wrap editwidth">{{job.demand.supplier.address}} Singapore {{job.demand.supplier.postalCode}}</div>
                     </label>
                     <label class="item item-input reducepaddingnone">
                         <span class="input-label reduceinputlabel"><i class="ion-ios-location"></i> Delivery</span>
@@ -137,7 +137,7 @@
                         <span class="input-label reduceinputlabel"><i class="ion-clipboard"></i> Reason</span>
                         <div class="item-text-wrap editwidth">{{job.demand.comments}}</div>
                     </label>
-                    <div class="reducebuttonpadding" style="text-align:right"><button class="button button-small button-calm icon-right" ng-click="view(job)"><strong>View Job Details <i class="ion-arrow-right-b"></i></strong></button></div>
+                    <div class="reducebuttonpadding" style="text-align:right"><button class="button button-small btn blue icon-right" ng-click="view(job)"><strong>View Job Details <i class="ion-arrow-right-b"></i></strong></button></div>
                     <br>
 
                     <!--                    <div class="buttons">-->

@@ -1,8 +1,6 @@
 angular.module('starter.controllers')
 
         .controller('MyJobsCtrl', function ($scope, $state, $stateParams, $http, $filter, $localstorage, api, $ionicPopup, $ionicModal) {
-            console.log($state);
-            console.log("MyJobsCtrl");
             $scope.username = $localstorage.get('username');
             $scope.userID = $localstorage.get('userID');
 
@@ -19,8 +17,6 @@ angular.module('starter.controllers')
                     method: 'GET'
                 }).then(function (response) {
                     $scope.demandItemList = response.data;
-                    console.log("GetDemandItemListRequest SUCCESS");
-                    console.log($scope.demandItemList);
                 }).finally(function () {
                     // Stop the ion-refresher from spinning
                     $scope.$broadcast('scroll.refreshComplete');
@@ -39,10 +35,12 @@ angular.module('starter.controllers')
                 method: 'GET'
             }).then(function (response) {
                 $scope.demandItemList = response.data;
-                console.log("GetDemandItemListRequest SUCCESS");
-                console.log($scope.demandItemList);
             });
-
+            
+            $scope.$on('jobAccepted', function (event, status) {
+                $scope.myJobStatus = "Accepted";
+            });
+            
             //viewing the particular job details
             $scope.view = function (job) {
                 $http({
@@ -91,7 +89,6 @@ angular.module('starter.controllers')
                                 }).then(function (response) {
 
                                     if (response.data.isCancelled) {
-                                        console.log("Job Successfully Cancelled");
                                         $scope.modal.hide();
                                         $scope.myJobStatus = "Cancelled";
 
@@ -117,16 +114,14 @@ angular.module('starter.controllers')
                     title: 'Job Cancelled',
                     template: 'Your job has been cancelled successfully. We hope you can still help out in other jobs :)',
                     okType: 'button-calm'
-                    
+
                 });
 
                 cancelSuccessfulPopup.then(function (res) {
-                    console.log("Successfully cancelled");
-//                                                $state.go($state.current, $stateParams, {reload: true, inherit: false});                                                
-
+                    //console.log("Successfully cancelled");
                 });
             };
-            
+
             //View Job Details Modal
             $ionicModal.fromTemplateUrl('templates/viewMyJobDetails.html', {
                 scope: $scope,
@@ -159,19 +154,19 @@ angular.module('starter.controllers')
                 $scope.myJobStatus = "Cancelled";
             } else {
                 $scope.myJobStatus = "Accepted";
+                
             }
 
 
             $scope.goToMapRouting = function () {
                 $state.go('maprouting');
             };
-            
+
             $scope.sortType = "deliveryDate";
             $scope.sortReverse = true;
-            
-            $scope.sortBy = function(job){
-                console.log("JOB IZ: " + job);
-                if($scope.sortType === "deliveryDate"){
+
+            $scope.sortBy = function (job) {
+                if ($scope.sortType === "deliveryDate") {
                     var parts = job.deliveryDate.split('/');
                     var date = new Date(parseInt(parts[2]), parseInt(parts[1]), parseInt(parts[0]));
                     return date;

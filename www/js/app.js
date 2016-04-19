@@ -43,19 +43,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
                 }
             }])
 
-//        .run(function($localstorage) {
-//
-//          $localstorage.set('name', 'Max');
-//          console.log($localstorage.get('name'));
-//          $localstorage.setObject('post', {
-//            name: 'Thoughts',
-//            text: 'Today was a good day'
-//          });
-//
-//          var post = $localstorage.getObject('post');
-//          console.log(post);
-//        });
-
         .config(function ($stateProvider, $urlRouterProvider) {
 
             // Ionic uses AngularUI Router which uses the concept of states
@@ -134,8 +121,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
                         url: '/notification',
                         views: {
                             'myjobs': {
-                                templateUrl: 'templates/notification.html',
-                                controller: 'NotificationCtrl'
+                                templateUrl: 'templates/notification.html'
                             }
                         }
                     })
@@ -186,13 +172,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         .config(['apiProvider',
             function (apiProvider) {
                 //http://localhost:8100 for ionic serve testing
-                //apiProvider.setAPIEndpoints('http://localhost:8100');
+                apiProvider.setAPIEndpoints('http://localhost:8100');
                 //http://192.168.1.19:8100 for livereload testing
                 //apiProvider.setAPIEndpoints('http://192.168.1.19:8100');
                 //http://apps.greentransformationlab.com/Wheels4Food for emulator and native mobile testing (LIVE SERVER)
                 //apiProvider.setAPIEndpoints('http://apps.greentransformationlab.com/Wheels4Food');
                 //http://apps.greentransformationlab.com:8081/Wheels4Food for emulator and native mobile testing (TEST SERVER)
-                apiProvider.setAPIEndpoints('http://greentransformationlab.com:8081/Wheels4Food');
+                //apiProvider.setAPIEndpoints('http://greentransformationlab.com:8081/Wheels4Food');
             }
         ])
 

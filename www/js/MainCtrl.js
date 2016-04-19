@@ -4,13 +4,10 @@ angular.module('starter.controllers')
         .controller('MainCtrl', function ($scope, $state, $http, api, $ionicPopup, $localstorage, $ionicPopover) {
 //            $scope.userID = $localstorage.get('userID');
             $scope.userID = "";
-            console.log("hello");
-            
+           
 
             $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
                 $scope.currentState = toState.name;
-                console.log(fromState);
-                console.log(toState);
 
                 if (!$state.is('register') && !$state.is('resetpassword') && !$state.is('login')) {
                     console.log("success");
@@ -19,13 +16,7 @@ angular.module('starter.controllers')
                         url: api.endpoint + 'GetNotificationListByUserIdRequest/' + $scope.userID,
                         method: 'GET'
                     }).then(function (response) {
-                        console.log("YELLOW MELLOW YELLOW MELLOW YEEEEELLLLLLLOOOOOOOWWWWW MEEEEEELLLLLOOOWWWW");
-                        console.log(response);
-
                         $scope.notificationList = response.data.reverse();
-                        console.log("THIS IS THE NOTIFICATION LIST!!!!!!!");
-                        console.log($scope.notificationList);
-//                    $scope.message = $scope.notificationList.[0].message;
 
                         $scope.badgeCount = response.data.length;
 
@@ -73,8 +64,6 @@ angular.module('starter.controllers')
                 } else {
                     $scope.notificationTab = "cancel";
                 }
-//                $state.go('tab.myjobs');
-//                $scope.popover.hide();
 
                 var index = $scope.notificationList.indexOf(notification);
 
@@ -87,7 +76,6 @@ angular.module('starter.controllers')
                 }).then(function (response) {
                     if (response.data.isDeleted) {
                         $scope.notificationList.splice(index, 1);
-//                                $state.go(notification.state, $stateParams, {reload: true, inherit: false});
                         $state.go('tab.myjobs');
                         $scope.popover.hide();
 
